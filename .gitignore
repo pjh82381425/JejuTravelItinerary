@@ -1,3 +1,7 @@
 node_template/node_modules
 node_template/package-lock.json
 node_template/package.json
+package-lock.json
+package.json
+node_modules
+.important
