@@ -7,6 +7,10 @@ function Home() {
 
     return (
         <div className="app">
+            <video className="background-video" autoPlay muted loop>
+                <source src="/background.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
             <div className="container">
                 <div className="title">일정을 선택하세요</div>
                 <div className="team-container">
