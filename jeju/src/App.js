@@ -1,25 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function Home() {
+    const navigate = useNavigate();
+
+    return (
+        <div className="app">
+            <div className="container">
+                <div className="title">일정을 선택하세요</div>
+                <div className="team-container">
+                    <button onClick={() => navigate("/itinerary1")} className="team-button">1팀</button>
+                    <button onClick={() => navigate("/itinerary2")} className="team-button">2팀</button>
+                    <button onClick={() => navigate("/itinerary3")} className="team-button">3팀</button>
+                </div>
+            </div>
+        </div>
+    );
 }
 
-export default App;
+function Itinerary1() {
+    return (
+        <div className="app-itiner">
+            <div className="container">1</div>
+        </div>
+    );
+}
+
+function Itinerary2() {
+    return (
+        <div className="app-itiner">
+            <div className="container">2</div>
+        </div>
+    );
+}
+
+function Itinerary3() {
+    return (
+        <div className="app-itiner">
+            <div className="container">3</div>
+        </div>
+    );
+}
+
+function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/itinerary1" element={<Itinerary1 />} />
+            <Route path="/itinerary2" element={<Itinerary2 />} />
+            <Route path="/itinerary3" element={<Itinerary3 />} />
+        </Routes>
+    );
+}
+
+function Main() {
+    return (
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    );
+}
+
+export default Main;
