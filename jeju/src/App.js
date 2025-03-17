@@ -26,7 +26,7 @@ function Home() {
 function Itinerary1() {
     return (
         <div className="app-itiner">
-            <div className="container">1</div>
+            1
         </div>
     );
 }
@@ -34,7 +34,7 @@ function Itinerary1() {
 function Itinerary2() {
     return (
         <div className="app-itiner">
-            <div className="container">2</div>
+            2
         </div>
     );
 }
@@ -42,7 +42,7 @@ function Itinerary2() {
 function Itinerary3() {
     return (
         <div className="app-itiner">
-            <div className="container">3</div>
+            3
         </div>
     );
 }

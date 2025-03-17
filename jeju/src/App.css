@@ -31,7 +31,7 @@ html, body {
 
 .container {
   display: grid;
-  grid-template-columns: 1fr;
+  /* grid-template-columns: 1fr;
   grid-template-rows: auto;
   width: min(80%, 600px);
   min-width: 300px;
@@ -39,7 +39,7 @@ html, body {
   background-color: rgba(255, 255, 255, 0.7);
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); */
   text-align: center;
 }
 
@@ -59,7 +59,7 @@ html, body {
 }
 
 .team-button {
-  width: 150px;
+  width: 165px;
   height: 100px;
   font-size: 48px !important;
   font-weight: 100;
@@ -70,13 +70,18 @@ html, body {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
 .team-button:hover {
   background-color: #297fb980;
   color: white;
   transform: scale(1.05);
 }
 
-@media (max-width: 500px) {
+.app-itiner {
+  
+}
+
+/* @media (max-width: 500px) {
   .team-container {
     flex-direction: column;
     gap: 10px;
@@ -86,4 +91,4 @@ html, body {
     width: 100%;
     font-size: 18px;
   }
-}
+} */
