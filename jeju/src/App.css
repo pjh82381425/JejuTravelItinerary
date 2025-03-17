@@ -78,7 +78,44 @@ html, body {
 }
 
 .app-itiner {
-  
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.initer-title {
+  grid-area: 1 / 1 / 2 / 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  font-size: 70px;
+  font-weight: 100;
+}
+
+.day-menu {
+  grid-area: 2 / 1 / 6 / 6;
+  display: flex;
+  text-align: top;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: 200;
+  gap: 10px;
+}
+
+.day-button {
+  width: 70px;
+  height: 50px;
+  font-size: 25px;
+  font-weight: 200;
+  color: #333;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(230, 230, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 /* @media (max-width: 500px) {
