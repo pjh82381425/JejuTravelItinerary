@@ -1,7 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+// import test from "./component/test";
 import "./App.css";
+
+const teams = {
+    team1: [
+      { day: "day1", title: "1일차 일정 변수 내용", first: "나도 몰라" },
+      { day: "day2", title: "2일차 일정 변수 내용" },
+      { day: "day3", title: "3일차 일정 변수 내용" },
+      { day: "day4", title: "4일차 일정 변수 내용" },
+    ],
+    team2: [
+      { day: "day1", title: "2팀 1일차 일정 내용" },
+      { day: "day2", title: "2팀 2일차 일정 내용" },
+      { day: "day3", title: "2팀 3일차 일정 내용" },
+      { day: "day4", title: "2팀 4일차 일정 내용" },
+    ],
+    team3: [
+      { day: "day1", title: "3팀 1일차 일정 내용" },
+      { day: "day2", title: "3팀 2일차 일정 내용" },
+      { day: "day3", title: "3팀 3일차 일정 내용" },
+      { day: "day4", title: "3팀 4일차 일정 내용" },
+    ],
+    team4: [
+      { day: "day1", title: "4팀 1일차 일정 내용" },
+      { day: "day2", title: "4팀 2일차 일정 내용" },
+      { day: "day3", title: "4팀 3일차 일정 내용" },
+      { day: "day4", title: "4팀 4일차 일정 내용" },
+    ],
+  };
 
 function AnimatedContainer({ children, className }) {
     const [isVisible, setIsVisible] = useState(false);
@@ -29,7 +57,7 @@ function Home() {
         <div className="app">
             <video className="background-video" autoPlay muted loop>
                 <source src="/background.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
+                브자우저가 비디오 태그를 지원하지 않습니다.
             </video>
             <div className="container">
                 <div className="title">일정을 선택하세요</div>
@@ -62,10 +90,10 @@ function Itinerary1() {
                 <button onClick={() => handleDayClick("day4")} className="day-button">4일차</button>
             </div>
 
-            {selectedDay === "day1" && <AnimatedContainer className="day-box">1일차 일정 내용</AnimatedContainer>}
-            {selectedDay === "day2" && <AnimatedContainer className="day-box">2일차 일정 내용</AnimatedContainer>}
-            {selectedDay === "day3" && <AnimatedContainer className="day-box">3일차 일정 내용</AnimatedContainer>}
-            {selectedDay === "day4" && <AnimatedContainer className="day-box">4일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day1" && <AnimatedContainer className="day-box">{teams['team1'].find(item => item.day === 'day1')?.title}, 첫번째 일정: {teams['team1'].find(item => item.day === 'day1')?.first}</AnimatedContainer>}
+            {selectedDay === "day2" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
+            {selectedDay === "day3" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
+            {selectedDay === "day4" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
         </AnimatedContainer>
     );
 }
