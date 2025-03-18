@@ -62,10 +62,10 @@ function Itinerary1() {
                 <button onClick={() => handleDayClick("day4")} className="day-button">4일차</button>
             </div>
 
-            {selectedDay === "day1" && <div className="day-box">1일차 일정 내용</div>}
-            {selectedDay === "day2" && <div className="day-box">2일차 일정 내용</div>}
-            {selectedDay === "day3" && <div className="day-box">3일차 일정 내용</div>}
-            {selectedDay === "day4" && <div className="day-box">4일차 일정 내용</div>}
+            {selectedDay === "day1" && <AnimatedContainer className="day-box">1일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day2" && <AnimatedContainer className="day-box">2일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day3" && <AnimatedContainer className="day-box">3일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day4" && <AnimatedContainer className="day-box">4일차 일정 내용</AnimatedContainer>}
         </AnimatedContainer>
     );
 }
@@ -90,10 +90,10 @@ function Itinerary2() {
                 <button onClick={() => handleDayClick("day4")} className="day-button">4일차</button>
             </div>
 
-            {selectedDay === "day1" && <div className="day-box">1일차 일정 내용</div>}
-            {selectedDay === "day2" && <div className="day-box">2일차 일정 내용</div>}
-            {selectedDay === "day3" && <div className="day-box">3일차 일정 내용</div>}
-            {selectedDay === "day4" && <div className="day-box">4일차 일정 내용</div>}
+            {selectedDay === "day1" && <AnimatedContainer className="day-box">1일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day2" && <AnimatedContainer className="day-box">2일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day3" && <AnimatedContainer className="day-box">3일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day4" && <AnimatedContainer className="day-box">4일차 일정 내용</AnimatedContainer>}
         </AnimatedContainer>
     );
 }
@@ -117,10 +117,10 @@ function Itinerary3() {
                 <button onClick={() => handleDayClick("day4")} className="day-button">4일차</button>
             </div>
 
-            {selectedDay === "day1" && <div className="day-box">1일차 일정 내용</div>}
-            {selectedDay === "day2" && <div className="day-box">2일차 일정 내용</div>}
-            {selectedDay === "day3" && <div className="day-box">3일차 일정 내용</div>}
-            {selectedDay === "day4" && <div className="day-box">4일차 일정 내용</div>}
+            {selectedDay === "day1" && <AnimatedContainer className="day-box">1일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day2" && <AnimatedContainer className="day-box">2일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day3" && <AnimatedContainer className="day-box">3일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day4" && <AnimatedContainer className="day-box">4일차 일정 내용</AnimatedContainer>}
         </AnimatedContainer>
     );
 }
