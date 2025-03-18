@@ -85,7 +85,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 250px;
+  height: 200px;
   font-size: 70px;
   font-weight: 100;
 }
@@ -127,6 +127,35 @@ html, body {
   flex-direction: column; /* 세로 정렬 */
   padding: 20px;
   /* gap: 10px; */
+}
+
+.button-container {
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  gap: 7px;
+}
+
+.button {
+  flex-grow: 1; /* 기본적으로 같은 비율 (25%) */
+  transition: flex-grow 0.3s ease-in-out;
+  background-color: lightblue;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  background-color: rgba(230, 230, 255, 0.5);
+}
+
+/* 선택된 버튼의 크기를 키우고, 나머지는 자동으로 조정 */
+.button.selected{ 
+  flex-grow: 2; /* 선택된 버튼의 비율 증가 (50%) */
+  background-color: #297fb980;
+  color: white;
+  transform: scale(1.025);
 }
 
 /* @media (max-width: 500px) {

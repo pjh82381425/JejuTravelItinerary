@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-// import test from "./component/test";
+// import DynamicButtons from "./component/dynamicbutton";
 import "./App.css";
 
 const teams = {
@@ -73,6 +73,7 @@ function Home() {
 
 function Itinerary1() {
     const [selectedDay, setSelectedDay] = useState(null);
+    const [selected, setSelected] = useState(null);
 
     // 각 일자 클릭 시 호출되는 함수
     const handleDayClick = (day) => {
@@ -82,12 +83,21 @@ function Itinerary1() {
 
     return (
         <AnimatedContainer className="app-itiner">
-            <div className="initer-title">1팀</div>
+            <div className="initer-title">1팀 일정</div>
             <div className="day-menu">
-                <button onClick={() => handleDayClick("day1")} className="day-button">1일차</button>
-                <button onClick={() => handleDayClick("day2")} className="day-button">2일차</button>
-                <button onClick={() => handleDayClick("day3")} className="day-button">3일차</button>
-                <button onClick={() => handleDayClick("day4")} className="day-button">4일차</button>
+                <div className="button-container">
+                    {[1, 2, 3, 4].map((num) => (
+                        <button
+                            key={num}
+                            className={`button ${selected === num ? "selected" : ""}`}
+                            onClick={() => handleDayClick(`day${num}`)}
+                            onMouseEnter={() => setSelected(num)}
+                            onMouseLeave={() => setSelected(null)}
+                        >
+                            day {num}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             {selectedDay === "day1" && <AnimatedContainer className="day-box">{teams['team1'].find(item => item.day === 'day1')?.title}, 첫번째 일정: {teams['team1'].find(item => item.day === 'day1')?.first}</AnimatedContainer>}
@@ -110,7 +120,7 @@ function Itinerary2() {
 
     return (
         <AnimatedContainer className="app-itiner">
-            <div className="initer-title">2팀</div>
+            <div className="initer-title">2팀 일정</div>
             <div className="day-menu">
                 <button onClick={() => handleDayClick("day1")} className="day-button">1일차</button>
                 <button onClick={() => handleDayClick("day2")} className="day-button">2일차</button>
@@ -137,7 +147,7 @@ function Itinerary3() {
 
     return (
         <AnimatedContainer className="app-itiner">
-            <div className="initer-title">3팀</div>
+            <div className="initer-title">3팀 일정</div>
             <div className="day-menu">
                 <button onClick={() => handleDayClick("day1")} className="day-button">1일차</button>
                 <button onClick={() => handleDayClick("day2")} className="day-button">2일차</button>
