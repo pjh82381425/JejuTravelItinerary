@@ -6,30 +6,30 @@ import "./App.css";
 
 const teams = {
     team1: [
-      { day: "day1", title: "1일차 일정 변수 내용", first: "나도 몰라" },
-      { day: "day2", title: "2일차 일정 변수 내용" },
-      { day: "day3", title: "3일차 일정 변수 내용" },
-      { day: "day4", title: "4일차 일정 변수 내용" },
+        { day: "day1", title: "1일차 일정 변수 내용", firstTime: "?:??", first: "나도 몰라" },
+        { day: "day2", title: "2일차 일정 변수 내용", first: "나도 몰라" },
+        { day: "day3", title: "3일차 일정 변수 내용", first: "나도 몰라" },
+        { day: "day4", title: "4일차 일정 변수 내용", first: "나도 몰라" },
     ],
     team2: [
-      { day: "day1", title: "2팀 1일차 일정 내용" },
-      { day: "day2", title: "2팀 2일차 일정 내용" },
-      { day: "day3", title: "2팀 3일차 일정 내용" },
-      { day: "day4", title: "2팀 4일차 일정 내용" },
+        { day: "day1", title: "2팀 1일차 일정 내용", first: "나도 몰라" },
+        { day: "day2", title: "2팀 2일차 일정 내용", first: "나도 몰라" },
+        { day: "day3", title: "2팀 3일차 일정 내용", first: "나도 몰라" },
+        { day: "day4", title: "2팀 4일차 일정 내용", first: "나도 몰라" },
     ],
     team3: [
-      { day: "day1", title: "3팀 1일차 일정 내용" },
-      { day: "day2", title: "3팀 2일차 일정 내용" },
-      { day: "day3", title: "3팀 3일차 일정 내용" },
-      { day: "day4", title: "3팀 4일차 일정 내용" },
+        { day: "day1", title: "3팀 1일차 일정 내용", first: "나도 몰라" },
+        { day: "day2", title: "3팀 2일차 일정 내용", first: "나도 몰라" },
+        { day: "day3", title: "3팀 3일차 일정 내용", first: "나도 몰라" },
+        { day: "day4", title: "3팀 4일차 일정 내용", first: "나도 몰라" },
     ],
     team4: [
-      { day: "day1", title: "4팀 1일차 일정 내용" },
-      { day: "day2", title: "4팀 2일차 일정 내용" },
-      { day: "day3", title: "4팀 3일차 일정 내용" },
-      { day: "day4", title: "4팀 4일차 일정 내용" },
+        { day: "day1", title: "4팀 1일차 일정 내용", first: "나도 몰라" },
+        { day: "day2", title: "4팀 2일차 일정 내용", first: "나도 몰라" },
+        { day: "day3", title: "4팀 3일차 일정 내용", first: "나도 몰라" },
+        { day: "day4", title: "4팀 4일차 일정 내용", first: "나도 몰라" },
     ],
-  };
+};
 
 function AnimatedContainer({ children, className }) {
     const [isVisible, setIsVisible] = useState(false);
@@ -74,6 +74,9 @@ function Home() {
 function Itinerary1() {
     const [selectedDay, setSelectedDay] = useState(null);
     const [selected, setSelected] = useState(null);
+    const day1 = teams['team1'].find(item => item.day === 'day1');
+    const day2 = teams['team1'].find(item => item.day === 'day2');
+    const day3 = teams['team1'].find(item => item.day === 'day3');
 
     // 각 일자 클릭 시 호출되는 함수
     const handleDayClick = (day) => {
@@ -100,7 +103,12 @@ function Itinerary1() {
                 </div>
             </div>
 
-            {selectedDay === "day1" && <AnimatedContainer className="day-box">{teams['team1'].find(item => item.day === 'day1')?.title}, 첫번째 일정: {teams['team1'].find(item => item.day === 'day1')?.first}</AnimatedContainer>}
+            {selectedDay === "day1" && <AnimatedContainer classame="day-box">
+                <div className="day-detail-box">{day1.title} 
+                    <div className="br" /> 
+                    {day1.firstTime}: {day1.first}
+                    </div>
+                    </AnimatedContainer>}
             {selectedDay === "day2" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
             {selectedDay === "day3" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
             {selectedDay === "day4" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
@@ -111,6 +119,10 @@ function Itinerary1() {
 
 function Itinerary2() {
     const [selectedDay, setSelectedDay] = useState(null);
+    const [selected, setSelected] = useState(null);
+    const day1 = teams['team2'].find(item => item.day === 'day1');
+    const day2 = teams['team2'].find(item => item.day === 'day2');
+    const day3 = teams['team2'].find(item => item.day === 'day3');
 
     // 각 일자 클릭 시 호출되는 함수
     const handleDayClick = (day) => {
@@ -122,22 +134,35 @@ function Itinerary2() {
         <AnimatedContainer className="app-itiner">
             <div className="initer-title">2팀 일정</div>
             <div className="day-menu">
-                <button onClick={() => handleDayClick("day1")} className="day-button">1일차</button>
-                <button onClick={() => handleDayClick("day2")} className="day-button">2일차</button>
-                <button onClick={() => handleDayClick("day3")} className="day-button">3일차</button>
-                <button onClick={() => handleDayClick("day4")} className="day-button">4일차</button>
+                <div className="button-container">
+                    {[1, 2, 3, 4].map((num) => (
+                        <button
+                            key={num}
+                            className={`button ${selected === num ? "selected" : ""}`}
+                            onClick={() => handleDayClick(`day${num}`)}
+                            onMouseEnter={() => setSelected(num)}
+                            onMouseLeave={() => setSelected(null)}
+                        >
+                            day {num}
+                        </button>
+                    ))}
+                </div>
             </div>
 
-            {selectedDay === "day1" && <AnimatedContainer className="day-box">1일차 일정 내용</AnimatedContainer>}
-            {selectedDay === "day2" && <AnimatedContainer className="day-box">2일차 일정 내용</AnimatedContainer>}
-            {selectedDay === "day3" && <AnimatedContainer className="day-box">3일차 일정 내용</AnimatedContainer>}
-            {selectedDay === "day4" && <AnimatedContainer className="day-box">4일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day1" && <AnimatedContainer className="day-box">{day1.title}, 첫번째 일정: {day1.first}</AnimatedContainer>}
+            {selectedDay === "day2" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
+            {selectedDay === "day3" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
+            {selectedDay === "day4" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
         </AnimatedContainer>
     );
 }
 
 function Itinerary3() {
     const [selectedDay, setSelectedDay] = useState(null);
+    const [selected, setSelected] = useState(null);
+    const day1 = teams['team3'].find(item => item.day === 'day1');
+    const day2 = teams['team3'].find(item => item.day === 'day2');
+    const day3 = teams['team3'].find(item => item.day === 'day3');
 
     // 각 일자 클릭 시 호출되는 함수
     const handleDayClick = (day) => {
@@ -149,16 +174,25 @@ function Itinerary3() {
         <AnimatedContainer className="app-itiner">
             <div className="initer-title">3팀 일정</div>
             <div className="day-menu">
-                <button onClick={() => handleDayClick("day1")} className="day-button">1일차</button>
-                <button onClick={() => handleDayClick("day2")} className="day-button">2일차</button>
-                <button onClick={() => handleDayClick("day3")} className="day-button">3일차</button>
-                <button onClick={() => handleDayClick("day4")} className="day-button">4일차</button>
+                <div className="button-container">
+                    {[1, 2, 3, 4].map((num) => (
+                        <button
+                            key={num}
+                            className={`button ${selected === num ? "selected" : ""}`}
+                            onClick={() => handleDayClick(`day${num}`)}
+                            onMouseEnter={() => setSelected(num)}
+                            onMouseLeave={() => setSelected(null)}
+                        >
+                            day {num}
+                        </button>
+                    ))}
+                </div>
             </div>
 
-            {selectedDay === "day1" && <AnimatedContainer className="day-box">1일차 일정 내용</AnimatedContainer>}
-            {selectedDay === "day2" && <AnimatedContainer className="day-box">2일차 일정 내용</AnimatedContainer>}
-            {selectedDay === "day3" && <AnimatedContainer className="day-box">3일차 일정 내용</AnimatedContainer>}
-            {selectedDay === "day4" && <AnimatedContainer className="day-box">4일차 일정 내용</AnimatedContainer>}
+            {selectedDay === "day1" && <AnimatedContainer className="day-box">{day1.title}, 첫번째 일정: {day1.first}</AnimatedContainer>}
+            {selectedDay === "day2" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
+            {selectedDay === "day3" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
+            {selectedDay === "day4" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
         </AnimatedContainer>
     );
 }

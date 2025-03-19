@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box; /* 박스 모델의 크기를 계산할 때, padding과 border를 포함하여 계산 */
-  font-family: jeju_hallasan, sans-serif;
+  font-family: jeju_hallasan, sans-serif; /* 약간의 제주도 향기 */
 }
 
 html, body {
@@ -31,15 +31,6 @@ html, body {
 
 .container {
   display: grid;
-  /* grid-template-columns: 1fr;
-  grid-template-rows: auto;
-  width: min(80%, 600px);
-  min-width: 300px;
-  min-height: 600px;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); */
   text-align: center;
 }
 
@@ -77,6 +68,8 @@ html, body {
   transform: scale(1.05);
 }
 
+/* 팀별 일정안내 css */
+
 .app-itiner {
   display: grid;
 }
@@ -110,8 +103,6 @@ html, body {
   background-color: rgba(230, 230, 255, 0.5);
   cursor: pointer;
   transition: all 0.3s ease;
-  /* cursor: pointer;
-  transition: all 0.3s ease; */
 }
 
 .day-button:hover {
@@ -126,7 +117,6 @@ html, body {
   justify-content: center;
   flex-direction: column; /* 세로 정렬 */
   padding: 20px;
-  /* gap: 10px; */
 }
 
 .button-container {
@@ -139,7 +129,7 @@ html, body {
 }
 
 .button {
-  flex-grow: 1; /* 기본적으로 같은 비율 (25%) */
+  flex-grow: 1;
   transition: flex-grow 0.3s ease-in-out;
   background-color: lightblue;
   border: none;
@@ -150,13 +140,33 @@ html, body {
   background-color: rgba(230, 230, 255, 0.5);
 }
 
-/* 선택된 버튼의 크기를 키우고, 나머지는 자동으로 조정 */
 .button.selected{ 
-  flex-grow: 2; /* 선택된 버튼의 비율 증가 (50%) */
+  flex-grow: 2;
   background-color: #297fb980;
   color: white;
-  transform: scale(1.025);
+  transform: scale(1.015);
 }
+
+/* 날짜별 일정 세부설명 css */
+
+.day-detail-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+/* 기타 css */
+
+.br {
+  display: block;
+  content: "";
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* 반응형 css */
 
 /* @media (max-width: 500px) {
   .team-container {
