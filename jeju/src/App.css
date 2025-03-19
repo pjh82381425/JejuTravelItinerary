@@ -36,6 +36,7 @@ html, body {
 
 .title {
   font-size: 36px;
+  font-weight: 200;
   color: #333;
   margin-bottom: 30px;
   font-family: 'Arial', sans-serif;
@@ -78,17 +79,15 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 200px;
-  font-size: 70px;
-  font-weight: 100;
+  height: 180px;
+  font-size: 50px;
+  font-weight: 150;
 }
 
 .day-menu {
   display: flex;
   text-align: top;
   justify-content: center;
-  font-size: 25px;
-  font-weight: 200;
   gap: 10px;
 }
 
@@ -96,7 +95,7 @@ html, body {
   width: 70px;
   height: 50px;
   font-size: 25px;
-  font-weight: 200;
+  font-weight: 150;
   color: #333;
   border: none;
   border-radius: 10px;
@@ -155,6 +154,8 @@ html, body {
   align-items: center;
   justify-content: center;
   padding-top: 20px;
+  font-size: 20px;
+  font-weight: 200;
 }
 
 /* 기타 css */
@@ -168,14 +169,26 @@ html, body {
 
 /* 반응형 css */
 
-/* @media (max-width: 500px) {
-  .team-container {
-    flex-direction: column;
-    gap: 10px;
+@media (min-width: 1440px) {
+  .title {
+    font-size: 48px;
   }
+}
 
-  .team-button {
-    width: 100%;
-    font-size: 18px;
+@media (min-width: 1600px) {
+  .title {
+    font-size: 48px;
   }
-} */
+}
+
+@media (min-width: 1920px) {
+  .title {
+    font-size: 48px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .title {
+    font-size: 48px;
+  }
+}
