@@ -6,7 +6,7 @@ import "./App.css";
 
 const teams = {
     team1: [
-        { day: "day1", title: "1일차 일정 변수 내용", firstTime: "?:??", first: "나도 몰라" },
+        { day: "day1", title: "1팀 1일차 일정", t1: "09:30~10:30", i1: "✈️ 공항집결", t2: "11:30~12:30", i2: "🛫 김해출발 🛬 제주도착", t3: "13:00~14:00", i3: "🍽️ 중식 - 현지식", t4: "15:00~16:20", i4: "🚴 레일바이크", t5: "16:30~17:30", i5: "🌿 용눈이오름", t6: "18:00", i6: "🏨 숙소도착 - 객실입실", t7: "18:30", i7: "🍽️ 석식" },
         { day: "day2", title: "2일차 일정 변수 내용", first: "나도 몰라" },
         { day: "day3", title: "3일차 일정 변수 내용", first: "나도 몰라" },
         { day: "day4", title: "4일차 일정 변수 내용", first: "나도 몰라" },
@@ -81,7 +81,7 @@ function Itinerary1() {
     // 각 일자 클릭 시 호출되는 함수
     const handleDayClick = (day) => {
         setSelectedDay(day); // 상태 업데이트
-        console.log(`Selected day: ${day}`); // 선택된 일자 확인용
+        // console.log(`Selected day: ${day}`); // 선택된 일자 확인용
     };
 
     return (
@@ -102,13 +102,19 @@ function Itinerary1() {
                     ))}
                 </div>
             </div>
+            <div className="br" />
 
             {selectedDay === "day1" && <AnimatedContainer classame="day-box">
-                <div className="day-detail-box">{day1.title} 
-                    <div className="br" /> 
-                    {day1.firstTime}: {day1.first}
-                    </div>
-                    </AnimatedContainer>}
+                <div className="day-detail-box">
+                    <div>{day1.t1}: {day1.i1}</div>
+                    <div>{day1.t2}: {day1.i2}</div>
+                    <div>{day1.t3}: {day1.i3}</div>
+                    <div id="detail" >{day1.t4}: {day1.i4}</div>
+                    <div>{day1.t5}: {day1.i5}</div>
+                    <div>{day1.t6}: {day1.i6}</div>
+                    <div>{day1.t7}: {day1.i7}</div>
+                </div>
+            </AnimatedContainer>}
             {selectedDay === "day2" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
             {selectedDay === "day3" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
             {selectedDay === "day4" && <AnimatedContainer className="day-box">1</AnimatedContainer>}
@@ -127,7 +133,7 @@ function Itinerary2() {
     // 각 일자 클릭 시 호출되는 함수
     const handleDayClick = (day) => {
         setSelectedDay(day); // 상태 업데이트
-        console.log(`Selected day: ${day}`); // 선택된 일자 확인용
+        // console.log(`Selected day: ${day}`); // 선택된 일자 확인용
     };
 
     return (
@@ -211,6 +217,11 @@ function MainApp() {
 function Main() {
     return (
         <BrowserRouter>
+            <>예시: </>
+            <>현재 일정:</>
+            <>1팀: 공항</>
+            <div className="br" />
+            <>도착까지 약 2분</>
             <MainApp />
         </BrowserRouter>
     );

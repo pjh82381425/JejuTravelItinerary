@@ -91,7 +91,7 @@ html, body {
   gap: 10px;
 }
 
-.day-button {
+/* .day-button {
   width: 70px;
   height: 50px;
   font-size: 25px;
@@ -108,7 +108,7 @@ html, body {
   background-color: #297fb980;
   color: white;
   transform: scale(1.05);
-}
+} */
 
 .day-box {
   display: flex;
@@ -156,6 +156,18 @@ html, body {
   padding-top: 20px;
   font-size: 20px;
   font-weight: 200;
+  gap: 20px;
+}
+
+.day-detail-box #detail {
+  background-color: rgba(230, 230, 255, 0.5);
+  border-radius: 5px;
+}
+
+.day-detail-box #detail:hover {
+  background-color: #297fb980;
+  border-radius: 5px;
+  color: white;
 }
 
 /* 기타 css */
@@ -163,8 +175,8 @@ html, body {
 .br {
   display: block;
   content: "";
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* 반응형 css */
