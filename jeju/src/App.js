@@ -6,7 +6,7 @@ import "./App.css";
 
 const teams = {
     team1: [
-        { day: "day1", t1: "9:30~10:30", i1: "✈️ 공항집결", t2: "11:30~12:30", i2: "🛫 김해출발 🛬 제주도착", t3: "13:00~14:00", i3: "🍽️ 중식 - 현지식", t4: "15:00~16:20", i4: "🚴 레일바이크", t5: "16:30~17:30", i5: "🌿 용눈이오름", t6: "18:00", i6: "🏨 숙소도착 - 객실입실", t7: "18:30", i7: "🍽️ 석식" },
+        { day: "day1", t1: "9:30~10:30", i1: "✈️ 공항집결", t2: "11:30~12:30", i2: "🛫 김해출발 🛬 제주도착", t3: "13:00~14:00", i3: "🍽️ 중식 - 현지식", t4: "15:00~16:20", i4: "🚴 레일바이크", t5: "16:30~17:30", i5: "⛰️ 용눈이오름", t6: "18:00", i6: "🏨 숙소도착 - 객실입실", t7: "18:30", i7: "🍽️ 석식" },
         { day: "day2", t1: "9:00", i1: "🐟 아쿠아플라넷 - 해양수족관", t2: "10:00", i2: "🌊 아쿠아플라넷- 해안광장", t3: "10:50", i3: "🎤 아쿠아플라넷 - 아레나공연", t4: "13:00", i4: "🍽️ 중식 - 현지식", t5: "14:30", i5: "🏎️ 카트체험", t6: "16:00", i6: "⛰️ 성산일출봉", t7: "18:00", i7: "🏨 숙소도착" },
         { day: "day3", t1: "7:00", i1: "🍽️ 조식 / 8:30: 출발", t2: "9:40", i2: "🚤 제주제트", t3: "10:30", i3: "🪨 주상절리", t4: "12:00", i4: "🍽️ 중식 - 현지식", t5: "13:20", i5: "🌿 오! 설록", t6: "15:30", i6: "🏛️ 본태박물관", t7: "18:00", i7: "🏨 숙소도착" },
         { day: "day4", t1: "8:20", i1: "출발", t2: "9:00~9:50", i2: "🕊️ 4.3평화공원", t3: "10:20~11:20", i3: "🌲 절물휴양림", t4: "11:40~13:20", i4: "🍽️ 동문시장 - 자율식사체험", t5: "15:00~16:00", i5: "🛫 제주출발 - 🛬 김해도착"},
@@ -103,7 +103,6 @@ function Home() {
             <video
             className={`bg-video__content ${videoReady ? 'show' : ''}`}
             autoPlay
-            loop
             muted
             playsInline
             onCanPlayThrough={handleVideoReady}>
@@ -190,11 +189,11 @@ function Itinerary1() {
             {selectedDay === "day3" && <AnimatedContainer className="day-box">
                 <div className="day-detail-box">
                     <div>{day3.t1}: {day3.i1}</div>
-                    <div>{day3.t2}: {day3.i2}</div>
-                    <div>{day3.t3}: {day3.i3}</div>
+                    <div id="detail" >{day3.t2}: {day3.i2}</div>
+                    <div id="detail" >{day3.t3}: {day3.i3}</div>
                     <div>{day3.t4}: {day3.i4}</div>
-                    <div>{day3.t5}: {day3.i5}</div>
-                    <div>{day3.t6}: {day3.i6}</div>
+                    <div id="detail" >{day3.t5}: {day3.i5}</div>
+                    <div id="detail" >{day3.t6}: {day3.i6}</div>
                     <div>{day3.t7}: {day3.i7}</div>
                 </div>
             </AnimatedContainer>}
@@ -202,9 +201,9 @@ function Itinerary1() {
             {selectedDay === "day4" && <AnimatedContainer className="day-box">
                 <div className="day-detail-box">
                     <div>{day4.t1}: {day4.i1}</div>
-                    <div>{day4.t2}: {day4.i2}</div>
-                    <div>{day4.t3}: {day4.i3}</div>
-                    <div>{day4.t4}: {day4.i4}</div>
+                    <div id="detail" >{day4.t2}: {day4.i2}</div>
+                    <div id="detail" >{day4.t3}: {day4.i3}</div>
+                    <div id="detail" >{day4.t4}: {day4.i4}</div>
                     <div>{day4.t5}: {day4.i5}</div>
                 </div>
             </AnimatedContainer>}
