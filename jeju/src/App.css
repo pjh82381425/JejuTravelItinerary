@@ -43,6 +43,12 @@ html, body {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.bg-video__content.show {
+  opacity: 1;
 }
 
 .container {

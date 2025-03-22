@@ -50,6 +50,26 @@ function AnimatedContainer({ children, className }) {
     );
 }
 
+function BackgroundAnimatedContainer({ children, className }) {
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        setIsVisible(true);
+    }, []);
+
+    return (
+        <motion.div
+            className={className}
+            initial={{ y: 50, opacity: 0 }}
+            animate={isVisible ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 3.5 }}
+        >
+            {children}
+        </motion.div>
+    );
+}
+
+
 function AnimatedContainer2({ children, className }) {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -71,11 +91,22 @@ function AnimatedContainer2({ children, className }) {
 
 function Home() {
     const navigate = useNavigate();
+    const [videoReady, setVideoReady] = useState(false);
+
+    const handleVideoReady = () => {
+        setVideoReady(true);
+    };
 
     return (
         <AnimatedContainer2 className="app">
             <div className="bg-video">
-                <video className="bg-video__content" autoPlay loop muted playsInline>
+            <video
+            className={`bg-video__content ${videoReady ? 'show' : ''}`}
+            autoPlay
+            loop
+            muted
+            playsInline
+            onCanPlayThrough={handleVideoReady}>
                     <source src="/background.mp4" type="video/mp4" />
                     브자우저가 비디오 태그를 지원하지 않습니다.
                 </video>
