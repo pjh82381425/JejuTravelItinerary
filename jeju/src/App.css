@@ -153,7 +153,7 @@ html, body {
   transform: scale(1.015);
 }
 
-/* 일정 장소별 상세 */
+/* 일정 장소별 상세 모션 */
 
 .day-detail-box {
   display: flex;
@@ -169,20 +169,7 @@ html, body {
   background-color: rgba(230, 230, 255, 0.5);
   border-radius: 5px;
   padding: 1px;
-}
-
-.hidden-box {
-  height: 0;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease-out, opacity 0.3s ease-out;
-}
-
-.day-detail-box #detail:hover ~ .hidden-box,
-.day-detail-box #detail:active ~ .hidden-box {
-  opacity: 1;
-  max-height: 100%;
+  position: relative;
 }
 
 .day-detail-box #detail:hover,
@@ -190,6 +177,24 @@ html, body {
   background-color: #297fb980;
   color: white;
 }
+
+.hidden-box {
+  visibility: hidden;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: height 0.3s ease-out, opacity 0.3s ease-out, visibility 0s 0.3s; /* visibility를 트랜지션 끝난 후 변경 */
+}
+
+.day-detail-box #detail:hover + .hidden-box,
+.day-detail-box #detail:active + .hidden-box {
+  visibility: visible;
+  height: 100px;
+  opacity: 1;
+  transition: height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* 일정 장소별 상세 css */
 
 /* 기타 css */
 
