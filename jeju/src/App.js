@@ -69,7 +69,6 @@ function BackgroundAnimatedContainer({ children, className }) {
     );
 }
 
-
 function AnimatedContainer2({ children, className }) {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -211,7 +210,6 @@ function Itinerary1() {
         </AnimatedContainer>
     );
 }
-
 
 function Itinerary2() {
     const [selectedDay, setSelectedDay] = useState(null);
