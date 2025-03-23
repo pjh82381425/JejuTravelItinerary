@@ -50,25 +50,6 @@ function AnimatedContainer({ children, className }) {
     );
 }
 
-function BackgroundAnimatedContainer({ children, className }) {
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
-
-    return (
-        <motion.div
-            className={className}
-            initial={{ y: 50, opacity: 0 }}
-            animate={isVisible ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 3.5 }}
-        >
-            {children}
-        </motion.div>
-    );
-}
-
 function AnimatedContainer2({ children, className }) {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -166,8 +147,9 @@ function Itinerary1() {
                     <div>{day1.t1}: {day1.i1}</div>
                     <div>{day1.t2}: {day1.i2}</div>
                     <div>{day1.t3}: {day1.i3}</div>
-                    <div id="detail" >{day1.t4}: {day1.i4}</div>
-                    <div id="detail" >{day1.t5}: {day1.i5}</div>
+                    <div id="detail">{day1.t4}: {day1.i4}</div>
+                    <div className="hidden-box">여기에 숨겨진 내용</div>
+                    <div id="detail">{day1.t5}: {day1.i5}</div>
                     <div>{day1.t6}: {day1.i6}</div>
                     <div>{day1.t7}: {day1.i7}</div>
                 </div>

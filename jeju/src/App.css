@@ -35,24 +35,22 @@ html, body {
   height: 100%;
   width: 100%;
   z-index: -1;
-  /* opacity: 0.75; */
-  transition: opacity 1s ease-in-out;
 }
 
-.bg-video__content {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
+  .bg-video__content {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
 
-.bg-video__content.show {
-  opacity: 1;
-}
+  .bg-video__content.show {
+    opacity: 1;
+  }
 
-.container {
-  /* box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.1); */
+  .container {
+    /* box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.1); */
   /* border-radius: 35px; */
   border-bottom-left-radius: 35px;
   border-bottom-right-radius: 35px;
@@ -94,9 +92,8 @@ html, body {
 }
 
 .team-button:hover {
-  background-color: #297fb980;
+  background-color: #297fb950;
   color: white;
-  /* transform: scale(1.05); */
 }
 
 /* 팀별 일정안내 css */
@@ -116,7 +113,6 @@ html, body {
 
 .day-menu {
   display: flex;
-  text-align: top;
   justify-content: center;
   gap: 10px;
 }
@@ -157,7 +153,7 @@ html, body {
   transform: scale(1.015);
 }
 
-/* 날짜별 일정 세부설명 css */
+/* 일정 장소별 상세 */
 
 .day-detail-box {
   display: flex;
@@ -175,7 +171,22 @@ html, body {
   padding: 1px;
 }
 
-.day-detail-box #detail:hover {
+.hidden-box {
+  height: 0;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, opacity 0.3s ease-out;
+}
+
+.day-detail-box #detail:hover ~ .hidden-box,
+.day-detail-box #detail:active ~ .hidden-box {
+  opacity: 1;
+  max-height: 100%;
+}
+
+.day-detail-box #detail:hover,
+.day-detail-box #detail:active {
   background-color: #297fb980;
   color: white;
 }
