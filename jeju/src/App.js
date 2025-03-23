@@ -287,7 +287,7 @@ function Itinerary2() {
 
     return (
         <AnimatedContainer className="app-itiner">
-            <div className="initer-title">1팀 일정</div>
+            <div className="initer-title">2팀 일정</div>
             <div className="day-menu">
                 <div className="button-container">
                     {[1, 2, 3, 4].map((num) => (
@@ -456,7 +456,7 @@ function Itinerary3() {
 
     return (
         <AnimatedContainer className="app-itiner">
-            <div className="initer-title">1팀 일정</div>
+            <div className="initer-title">3팀 일정</div>
             <div className="day-menu">
                 <div className="button-container">
                     {[1, 2, 3, 4].map((num) => (
