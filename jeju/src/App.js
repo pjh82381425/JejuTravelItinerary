@@ -44,25 +44,6 @@ function AnimatedContainer({ children, className }) {
     );
 }
 
-function AnimatedContainer2({ children, className }) {
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
-
-    return (
-        <motion.div
-            className={className}
-            initial={{ opacity: 0 }}
-            animate={isVisible ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-            {children}
-        </motion.div>
-    );
-}
-
 function Home() {
     const navigate = useNavigate();
     const [videoReady, setVideoReady] = useState(false);
@@ -72,7 +53,7 @@ function Home() {
     };
 
     return (
-        <AnimatedContainer2 className="app">
+        <div className="app">
             <div className="bg-video">
             <video
             className={`bg-video__content ${videoReady ? 'show' : ''}`}
@@ -84,7 +65,6 @@ function Home() {
                     브자우저가 비디오 태그를 지원하지 않습니다.
                 </video>
             </div>
-            <AnimatedContainer2>
                 <div className="container">
                     <div className="title">일정을 선택하세요</div>
                     <div className="team-container">
@@ -96,9 +76,8 @@ function Home() {
                         <button onClick={() => navigate("/itinerary3")} className="team-button">3팀</button>
                     </div>
                 </div>
-            </AnimatedContainer2>
             <div className="bottom"><a href="https://kr.freepik.com/free-video/sea-waves-breaking-rocky-shore_170909?log-in=google#fromView=keyword&page=1&position=11&uuid=0f0a43d9-e147-43e9-aea0-0da7efa24731">Video: freepik</a></div>
-        </AnimatedContainer2>
+        </div>
     );
 }
 
