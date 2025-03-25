@@ -45,6 +45,19 @@ function AnimatedContainer({ children, className }) {
 }
 
 function Home() {
+    useEffect(() => {
+        document.title = "제주도 수학여행 일정";
+    
+        let themeColorMeta = document.querySelector("meta[name='theme-color']");
+        if (!themeColorMeta) {
+          themeColorMeta = document.createElement("meta");
+          themeColorMeta.name = "theme-color";
+          document.head.appendChild(themeColorMeta);
+        }
+        themeColorMeta.content = "#aac4df";
+    
+      }, []);
+
     const navigate = useNavigate();
     const [videoReady, setVideoReady] = useState(false);
 
@@ -69,11 +82,11 @@ function Home() {
                     <div className="title">일정을 선택하세요</div>
                     <div className="team-container">
                     <div className="line" />
-                        <button onClick={() => navigate("/itinerary1")} className="team-button">1팀</button>
+                        <button onClick={() => navigate("/1팀일정")} className="team-button">1팀</button>
                         {/* <div className="line" /> */}
-                        <button onClick={() => navigate("/itinerary2")} className="team-button">2팀</button>
+                        <button onClick={() => navigate("/2팀일정")} className="team-button">2팀</button>
                         {/* <div className="line" /> */}
-                        <button onClick={() => navigate("/itinerary3")} className="team-button">3팀</button>
+                        <button onClick={() => navigate("/3팀일정")} className="team-button">3팀</button>
                     </div>
                 </div>
             <div className="bottom"><a href="https://kr.freepik.com/free-video/sea-waves-breaking-rocky-shore_170909?log-in=google#fromView=keyword&page=1&position=11&uuid=0f0a43d9-e147-43e9-aea0-0da7efa24731">Video: freepik</a></div>
@@ -82,6 +95,20 @@ function Home() {
 }
 
 function Itinerary1() {
+    useEffect(() => {
+        document.title = "1팀 일정";
+    
+        let themeColorMeta = document.querySelector("meta[name='theme-color']");
+        if (!themeColorMeta) {
+          themeColorMeta = document.createElement("meta");
+          themeColorMeta.name = "theme-color";
+          document.head.appendChild(themeColorMeta);
+        }
+        themeColorMeta.content = "#ffffff";
+    
+      }, []);
+
+    const navigate = useNavigate();
     const [selectedDay, setSelectedDay] = useState(null);
     const [hovered, setHovered] = useState(null);
 
@@ -125,18 +152,12 @@ function Itinerary1() {
                         <div>
                             {day1.t3}: {day1.i3}
                         </div>
-                        <div className="detail" >
+                        <div onClick={() => navigate("/레일바이크")} className="detail" >
                             {day1.t4}: {day1.i4}
                         </div>
-                        <section className="hidden-box">
-                            <Railbike />
-                        </section>
-                        <div className="detail">
+                        <div onClick={() => navigate("/용눈이오름")} className="detail">
                             {day1.t5}: {day1.i5}
                         </div>
-                        <section className="hidden-box">
-                            <Oreum />
-                        </section>
                         <div>{day1.t6}: {day1.i6}</div>
                         <div>{day1.t7}: {day1.i7}</div>
                     </div>
@@ -146,39 +167,22 @@ function Itinerary1() {
             {selectedDay === "day2" && (
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
-                        <div className="detail">
+                        <div onClick={() => navigate("/해양수족관")} className="detail">
                             {day2.t1}: {day2.i1}
                         </div>
-                        <section className="hidden-box">
-                            <Aquarium />
-                        </section>
-                        <div
-                            className="detail"
-                        >
+                        <div onClick={() => navigate("/해안광장")} className="detail">
                             {day2.t2}: {day2.i2}
                         </div>
-                        <section className="hidden-box">
-                            <Plaza />
-                        </section>
-                        <div className="detail">
+                        <div onClick={() => navigate("/아레나공연")} className="detail">
                             {day2.t3}: {day2.i3}
                         </div>
-                        <section className="hidden-box">
-                            <Arena />
-                        </section>
                         <div>{day2.t4}: {day2.i4}</div>
-                        <div className="detail">
+                        <div onClick={() => navigate("/카트체험")} className="detail">
                             {day2.t5}: {day2.i5}
                         </div>
-                        <section className="hidden-box">
-                            <Gokart />
-                        </section>
-                        <div className="detail">
+                        <div onClick={() => navigate("/성산일출봉")} className="detail">
                             {day2.t6}: {day2.i6}
                         </div>
-                        <section className="hidden-box">
-                            <Seongsan />
-                        </section>
                         <div>{day2.t7}: {day2.i7}</div>
                     </div>
                 </AnimatedContainer>
@@ -188,31 +192,19 @@ function Itinerary1() {
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
                         <div>{day3.t1}: {day3.i1}</div>
-                        <div className="detail">
+                        <div onClick={() => navigate("/제주제트")} className="detail">
                             {day3.t2}: {day3.i2}
                         </div>
-                        <section className="hidden-box">
-                            <Jet />
-                        </section>
-                        <div className="detail">
+                        <div onClick={() => navigate("/주상절리")} className="detail">
                             {day3.t3}: {day3.i3}
                         </div>
-                        <section className="hidden-box">
-                            <Jusangjeolli />
-                        </section>
                         <div>{day3.t4}: {day3.i4}</div>
-                        <div className="detail">
+                        <div onClick={() => navigate("/오!설록")} className="detail">
                             {day3.t5}: {day3.i5}
                         </div>
-                        <section className="hidden-box">
-                            <Seolloc />
-                        </section>
-                        <div className="detail">
+                        <div onClick={() => navigate("/본태박물관")} className="detail">
                             {day3.t6}: {day3.i6}
                         </div>
-                        <section className="hidden-box">
-                            <Musium />
-                        </section>
                         <div>{day3.t7}: {day3.i7}</div>
                     </div>
                 </AnimatedContainer>
@@ -222,26 +214,13 @@ function Itinerary1() {
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
                         <div>{day4.t1}: {day4.i1}</div>
-                        <div
-                            className="detail"
-                        >
+                        <div onClick={() => navigate("/43평화공원")} className="detail">
                             {day4.t2}: {day4.i2}
                         </div>
-                        <section className="hidden-box">
-                            <Peacepark />
-                        </section>
-                        <div className="detail">{day4.t3}: {day4.i3}</div>
-                        <section className="hidden-box">
-                            <Jeolmul />
-                        </section>
-                        <div
-                            className="detail"
-                        >
+                        <div onClick={() => navigate("/절물휴양림")} className="detail">{day4.t3}: {day4.i3}</div>
+                        <div onClick={() => navigate("/동문시장자율식사체험")} className="detail">
                             {day4.t4}: {day4.i4}
                         </div>
-                        <section className="hidden-box">
-                            <Dongmun />
-                        </section>
                         <div>{day4.t5}: {day4.i5}</div>
                     </div>
                 </AnimatedContainer>
@@ -588,13 +567,30 @@ function Itinerary3() {
     );
 }
 
+function Ready() {
+    return <div className="ready">준비중...</div>;
+}
+
 function MainApp() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/itinerary1" element={<Itinerary1 />} />
-            <Route path="/itinerary2" element={<Itinerary2 />} />
-            <Route path="/itinerary3" element={<Itinerary3 />} />
+            <Route path="/1팀일정" element={<Itinerary1 />} />
+            <Route path="/2팀일정" element={<Ready />} />
+            <Route path="/3팀일정" element={<Ready />} />
+            <Route path="/레일바이크" element={<Railbike />} />
+            <Route path="/용눈이오름" element={<Oreum />} />
+            <Route path="/해양수족관" element={<Aquarium />} />
+            <Route path="/해안광장" element={<Plaza />} />
+            <Route path="/아레나공연" element={<Arena />} />
+            <Route path="/카트체험" element={<Gokart />} />
+            <Route path="/성산일출봉" element={<Seongsan />} />
+            <Route path="/제주제트" element={<Jet />} />
+            <Route path="/오!설록" element={<Seolloc />} />
+            <Route path="/본태박물관" element={<Musium />} />
+            <Route path="/43평화공원" element={<Peacepark />} />
+            <Route path="/절물휴양림" element={<Jeolmul />} />
+            <Route path="/동문시장자율식사체험" element={<Dongmun />} />
         </Routes>
     );
 }
