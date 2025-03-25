@@ -44,20 +44,20 @@ function AnimatedContainer({ children, className }) {
     );
 }
 
-function Home() {
+const useThemeColor = (color = "#ffffff") => {
     useEffect(() => {
-        document.title = "제주도 수학여행 일정";
-    
-        let themeColorMeta = document.querySelector("meta[name='theme-color']");
-        if (!themeColorMeta) {
-          themeColorMeta = document.createElement("meta");
-          themeColorMeta.name = "theme-color";
-          document.head.appendChild(themeColorMeta);
-        }
-        themeColorMeta.content = "#aac4df";
-    
-      }, []);
+      let themeColorMeta = document.querySelector("meta[name='theme-color']");
+      if (!themeColorMeta) {
+        themeColorMeta = document.createElement("meta");
+        themeColorMeta.name = "theme-color";
+        document.head.appendChild(themeColorMeta);
+      }
+      themeColorMeta.content = color;
+    }, [color]);
+};
 
+function Home() {
+    useThemeColor("#aac4df");
     const navigate = useNavigate();
     const [videoReady, setVideoReady] = useState(false);
 
@@ -95,19 +95,7 @@ function Home() {
 }
 
 function Itinerary1() {
-    useEffect(() => {
-        document.title = "1팀 일정";
-    
-        let themeColorMeta = document.querySelector("meta[name='theme-color']");
-        if (!themeColorMeta) {
-          themeColorMeta = document.createElement("meta");
-          themeColorMeta.name = "theme-color";
-          document.head.appendChild(themeColorMeta);
-        }
-        themeColorMeta.content = "#ffffff";
-    
-      }, []);
-
+    useThemeColor("#ffffff");
     const navigate = useNavigate();
     const [selectedDay, setSelectedDay] = useState(null);
     const [hovered, setHovered] = useState(null);
@@ -568,6 +556,7 @@ function Itinerary3() {
 }
 
 function Ready() {
+    useThemeColor("#ffffff");
     return <div className="ready">준비중...</div>;
 }
 
