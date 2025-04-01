@@ -212,6 +212,18 @@ a:any-link {
   color: #000000;
 }
 
+@keyframes bt {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.bt {
+  animation: bt infinite;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+}
+
 /* 반응형 css */
 
 /*  */
