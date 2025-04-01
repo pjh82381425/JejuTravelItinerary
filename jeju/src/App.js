@@ -22,22 +22,22 @@ function openLink(url) {
 
 const teams = {
     team1: [
-        { day: "day1", title: "1팀 1일차 일정 내용", first: "나도 몰라" },
-        { day: "day2", title: "1팀 2일차 일정 내용", first: "나도 몰라" },
-        { day: "day3", title: "1팀 3일차 일정 내용", first: "나도 몰라" },
-        { day: "day4", title: "1팀 4일차 일정 내용", first: "나도 몰라" },
+        { day: "day1", t1: "", i1: "" },
+        { day: "day2", t1: "", i1: "" },
+        { day: "day3", t1: "", i1: "" },
+        { day: "day4", t1: "", i1: "" },
     ],
     team2: [
-        { day: "day1", title: "2팀 1일차 일정 내용", first: "나도 몰라" },
-        { day: "day2", title: "2팀 2일차 일정 내용", first: "나도 몰라" },
-        { day: "day3", title: "2팀 3일차 일정 내용", first: "나도 몰라" },
-        { day: "day4", title: "2팀 4일차 일정 내용", first: "나도 몰라" },
+        { day: "day1", t1: "", i1: "" },
+        { day: "day2", t1: "", i1: "" },
+        { day: "day3", t1: "", i1: "" },
+        { day: "day4", t1: "", i1: "" },
     ],
     team3: [
-        { day: "day1", title: "3팀 1일차 일정 내용", first: "나도 몰라" },
-        { day: "day2", title: "3팀 2일차 일정 내용", first: "나도 몰라" },
-        { day: "day3", title: "3팀 3일차 일정 내용", first: "나도 몰라" },
-        { day: "day4", title: "3팀 4일차 일정 내용", first: "나도 몰라" },
+        { day: "day1", t1: "", i1: "" },
+        { day: "day2", t1: "", i1: "" },
+        { day: "day3", t1: "", i1: "" },
+        { day: "day4", t1: "", i1: "" },
     ],
 }
 
