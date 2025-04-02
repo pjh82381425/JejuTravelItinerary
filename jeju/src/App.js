@@ -14,13 +14,9 @@ const bonte_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_0000
 const peace_park_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500535";
 const jeolmul_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500570";
 const dongmoon_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500745";
-const tourist_distribution_url = "https://data.ijto.or.kr/bigdatamap/jeju/widget/main.do";
+// const tourist_distribution_url = "https://data.ijto.or.kr/bigdatamap/jeju/widget/main.do";
 
-function openLink(url) {
-    window.open(url, "_blank", "noopener,noreferrer");
-}
-
-const teams = {
+const Teams = {
     team1: [
         { day: "day1", t1: "", i1: "" },
         { day: "day2", t1: "", i1: "" },
@@ -39,6 +35,22 @@ const teams = {
         { day: "day3", t1: "", i1: "" },
         { day: "day4", t1: "", i1: "" },
     ],
+}
+
+const ThemeColor = (color = "#ffffff") => {
+    useEffect(() => {
+      let themeColorMeta = document.querySelector("meta[name='theme-color']");
+      if (!themeColorMeta) {
+        themeColorMeta = document.createElement("meta");
+        themeColorMeta.name = "theme-color";
+        document.head.appendChild(themeColorMeta);
+      }
+      themeColorMeta.content = color;
+    }, [color]);
+}
+
+function OpenLink(url) {
+    window.open(url, "_blank", "noopener,noreferrer");
 }
 
 function AnimatedContainer({ children, className }) {
@@ -60,20 +72,8 @@ function AnimatedContainer({ children, className }) {
     );
 }
 
-const useThemeColor = (color = "#ffffff") => {
-    useEffect(() => {
-      let themeColorMeta = document.querySelector("meta[name='theme-color']");
-      if (!themeColorMeta) {
-        themeColorMeta = document.createElement("meta");
-        themeColorMeta.name = "theme-color";
-        document.head.appendChild(themeColorMeta);
-      }
-      themeColorMeta.content = color;
-    }, [color]);
-}
-
 function Home() {
-    useThemeColor("#aac4df");
+    ThemeColor("#aac4df");
     const navigate = useNavigate();
     const [videoReady, setVideoReady] = useState(false);
 
@@ -111,15 +111,14 @@ function Home() {
 }
 
 function Itinerary1() {
-    useThemeColor("#ffffff");
-    const navigate = useNavigate();
+    ThemeColor("#ffffff");
     const [selectedDay, setSelectedDay] = useState(null);
     const [hovered, setHovered] = useState(null);
 
-    const day1 = teams['team1'].find(item => item.day === 'day1');
-    const day2 = teams['team1'].find(item => item.day === 'day2');
-    const day3 = teams['team1'].find(item => item.day === 'day3');
-    const day4 = teams['team1'].find(item => item.day === 'day4');
+    const day1 = Teams['team1'].find(item => item.day === 'day1');
+    const day2 = Teams['team1'].find(item => item.day === 'day2');
+    const day3 = Teams['team1'].find(item => item.day === 'day3');
+    const day4 = Teams['team1'].find(item => item.day === 'day4');
 
     // 각 일자 클릭 시 호출되는 함수
     const handleDayClick = (day) => {
@@ -156,10 +155,10 @@ function Itinerary1() {
                         <div>
                             {day1.t3}: {day1.i3}
                         </div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt" >
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt" >
                             {day1.t4}: {day1.i4}
                         </div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day1.t5}: {day1.i5}
                         </div>
                         <div>{day1.t6}: {day1.i6}</div>
@@ -171,20 +170,20 @@ function Itinerary1() {
             {selectedDay === "day2" && (
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day2.t1}: {day2.i1}
                         </div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day2.t2}: {day2.i2}
                         </div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day2.t3}: {day2.i3}
                         </div>
                         <div>{day2.t4}: {day2.i4}</div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day2.t5}: {day2.i5}
                         </div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day2.t6}: {day2.i6}
                         </div>
                         <div>{day2.t7}: {day2.i7}</div>
@@ -196,17 +195,17 @@ function Itinerary1() {
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
                         <div>{day3.t1}: {day3.i1}</div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day3.t2}: {day3.i2}
                         </div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day3.t3}: {day3.i3}
                         </div>
                         <div>{day3.t4}: {day3.i4}</div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day3.t5}: {day3.i5}
                         </div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day3.t6}: {day3.i6}
                         </div>
                         <div>{day3.t7}: {day3.i7}</div>
@@ -218,13 +217,13 @@ function Itinerary1() {
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
                         <div>{day4.t1}: {day4.i1}</div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day4.t2}: {day4.i2}
                         </div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day4.t3}: {day4.i3}
                         </div>
-                        <div onClick={() => openLink(railbike_url)} className="detail bt">
+                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
                             {day4.t4}: {day4.i4}
                         </div>
                         <div>{day4.t5}: {day4.i5}</div>
@@ -236,345 +235,13 @@ function Itinerary1() {
 }
 
 // function Itinerary2() {
-//     const [selectedDay, setSelectedDay] = useState(null);
-//     const [hovered, setHovered] = useState(null);
-
-//     const day1 = teams['team2'].find(item => item.day === 'day1');
-//     const day2 = teams['team2'].find(item => item.day === 'day2');
-//     const day3 = teams['team2'].find(item => item.day === 'day3');
-//     const day4 = teams['team2'].find(item => item.day === 'day4');
-
-//     // 각 일자 클릭 시 호출되는 함수
-//     const handleDayClick = (day) => {
-//         setSelectedDay(day);
-//     };
-
-//     return (
-//         <AnimatedContainer className="app-itiner">
-//             <div className="initer-title">2팀 일정</div>
-//             <div className="day-menu">
-//                 <div className="button-container">
-//                     {[1, 2, 3, 4].map((num) => (
-//                         <button
-//                             key={num}
-//                             className={`button ${hovered === `button${num}` ? "hovered" : ""} ${selectedDay === `day${num}` ? "selected" : ""}`}
-//                             onClick={() => handleDayClick(`day${num}`)}
-//                             onMouseEnter={() => setHovered(`button${num}`)}
-//                             onMouseLeave={() => setHovered(null)}
-//                         >
-//                             {num}일차
-//                         </button>
-//                     ))}
-//                 </div>
-//             </div>
-//             <div className="br" />
-
-//             {selectedDay === "day1" && (
-//                 <AnimatedContainer className="day-box">
-//                     <div className="day-detail-box">
-//                         <div>{day1.t1}: {day1.i1}</div>
-//                         <div>
-//                             {day1.t2}: {day1.i2}
-//                         </div>
-//                         <div>
-//                             {day1.t3}: {day1.i3}
-//                         </div>
-//                         <div className="detail" >
-//                             {day1.t4}: {day1.i4}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Railbike />
-//                         </section>
-//                         <div className="detail">
-//                             {day1.t5}: {day1.i5}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Oreum />
-//                         </section>
-//                         <div>{day1.t6}: {day1.i6}</div>
-//                         <div>{day1.t7}: {day1.i7}</div>
-//                     </div>
-//                 </AnimatedContainer>
-//             )}
-
-//             {selectedDay === "day2" && (
-//                 <AnimatedContainer className="day-box">
-//                     <div className="day-detail-box">
-//                         <div className="detail">
-//                             {day2.t1}: {day2.i1}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Aquarium />
-//                         </section>
-//                         <div
-//                             className="detail"
-//                         >
-//                             {day2.t2}: {day2.i2}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Plaza />
-//                         </section>
-//                         <div className="detail">
-//                             {day2.t3}: {day2.i3}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Arena />
-//                         </section>
-//                         <div>{day2.t4}: {day2.i4}</div>
-//                         <div className="detail">
-//                             {day2.t5}: {day2.i5}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Gokart />
-//                         </section>
-//                         <div className="detail">
-//                             {day2.t6}: {day2.i6}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Seongsan />
-//                         </section>
-//                         <div>{day2.t7}: {day2.i7}</div>
-//                     </div>
-//                 </AnimatedContainer>
-//             )}
-
-//             {selectedDay === "day3" && (
-//                 <AnimatedContainer className="day-box">
-//                     <div className="day-detail-box">
-//                         <div>{day3.t1}: {day3.i1}</div>
-//                         <div className="detail">
-//                             {day3.t2}: {day3.i2}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Jet />
-//                         </section>
-//                         <div className="detail">
-//                             {day3.t3}: {day3.i3}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Jusangjeolli />
-//                         </section>
-//                         <div>{day3.t4}: {day3.i4}</div>
-//                         <div className="detail">
-//                             {day3.t5}: {day3.i5}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Seolloc />
-//                         </section>
-//                         <div className="detail">
-//                             {day3.t6}: {day3.i6}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Musium />
-//                         </section>
-//                         <div>{day3.t7}: {day3.i7}</div>
-//                     </div>
-//                 </AnimatedContainer>
-//             )}
-
-//             {selectedDay === "day4" && (
-//                 <AnimatedContainer className="day-box">
-//                     <div className="day-detail-box">
-//                         <div>{day4.t1}: {day4.i1}</div>
-//                         <div
-//                             className="detail"
-//                         >
-//                             {day4.t2}: {day4.i2}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Peacepark />
-//                         </section>
-//                         <div className="detail">{day4.t3}: {day4.i3}</div>
-//                         <section className="hidden-box">
-//                             <Jeolmul />
-//                         </section>
-//                         <div
-//                             className="detail"
-//                         >
-//                             {day4.t4}: {day4.i4}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Dongmun />
-//                         </section>
-//                         <div>{day4.t5}: {day4.i5}</div>
-//                     </div>
-//                 </AnimatedContainer>
-//             )}
-//         </AnimatedContainer>
-//     );
 // }
 
 // function Itinerary3() {
-//     const [selectedDay, setSelectedDay] = useState(null);
-//     const [hovered, setHovered] = useState(null);
-
-//     const day1 = teams['team3'].find(item => item.day === 'day1');
-//     const day2 = teams['team3'].find(item => item.day === 'day2');
-//     const day3 = teams['team3'].find(item => item.day === 'day3');
-//     const day4 = teams['team3'].find(item => item.day === 'day4');
-
-//     // 각 일자 클릭 시 호출되는 함수
-//     const handleDayClick = (day) => {
-//         setSelectedDay(day);
-//     };
-
-//     return (
-//         <AnimatedContainer className="app-itiner">
-//             <div className="initer-title">3팀 일정</div>
-//             <div className="day-menu">
-//                 <div className="button-container">
-//                     {[1, 2, 3, 4].map((num) => (
-//                         <button
-//                             key={num}
-//                             className={`button ${hovered === `button${num}` ? "hovered" : ""} ${selectedDay === `day${num}` ? "selected" : ""}`}
-//                             onClick={() => handleDayClick(`day${num}`)}
-//                             onMouseEnter={() => setHovered(`button${num}`)}
-//                             onMouseLeave={() => setHovered(null)}
-//                         >
-//                             {num}일차
-//                         </button>
-//                     ))}
-//                 </div>
-//             </div>
-//             <div className="br" />
-
-//             {selectedDay === "day1" && (
-//                 <AnimatedContainer className="day-box">
-//                     <div className="day-detail-box">
-//                         <div>{day1.t1}: {day1.i1}</div>
-//                         <div>
-//                             {day1.t2}: {day1.i2}
-//                         </div>
-//                         <div>
-//                             {day1.t3}: {day1.i3}
-//                         </div>
-//                         <div className="detail" >
-//                             {day1.t4}: {day1.i4}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Railbike />
-//                         </section>
-//                         <div className="detail">
-//                             {day1.t5}: {day1.i5}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Oreum />
-//                         </section>
-//                         <div>{day1.t6}: {day1.i6}</div>
-//                         <div>{day1.t7}: {day1.i7}</div>
-//                     </div>
-//                 </AnimatedContainer>
-//             )}
-
-//             {selectedDay === "day2" && (
-//                 <AnimatedContainer className="day-box">
-//                     <div className="day-detail-box">
-//                         <div className="detail">
-//                             {day2.t1}: {day2.i1}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Aquarium />
-//                         </section>
-//                         <div
-//                             className="detail"
-//                         >
-//                             {day2.t2}: {day2.i2}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Plaza />
-//                         </section>
-//                         <div className="detail">
-//                             {day2.t3}: {day2.i3}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Arena />
-//                         </section>
-//                         <div>{day2.t4}: {day2.i4}</div>
-//                         <div className="detail">
-//                             {day2.t5}: {day2.i5}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Gokart />
-//                         </section>
-//                         <div className="detail">
-//                             {day2.t6}: {day2.i6}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Seongsan />
-//                         </section>
-//                         <div>{day2.t7}: {day2.i7}</div>
-//                     </div>
-//                 </AnimatedContainer>
-//             )}
-
-//             {selectedDay === "day3" && (
-//                 <AnimatedContainer className="day-box">
-//                     <div className="day-detail-box">
-//                         <div>{day3.t1}: {day3.i1}</div>
-//                         <div className="detail">
-//                             {day3.t2}: {day3.i2}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Jet />
-//                         </section>
-//                         <div className="detail">
-//                             {day3.t3}: {day3.i3}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Jusangjeolli />
-//                         </section>
-//                         <div>{day3.t4}: {day3.i4}</div>
-//                         <div className="detail">
-//                             {day3.t5}: {day3.i5}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Seolloc />
-//                         </section>
-//                         <div className="detail">
-//                             {day3.t6}: {day3.i6}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Musium />
-//                         </section>
-//                         <div>{day3.t7}: {day3.i7}</div>
-//                     </div>
-//                 </AnimatedContainer>
-//             )}
-
-//             {selectedDay === "day4" && (
-//                 <AnimatedContainer className="day-box">
-//                     <div className="day-detail-box">
-//                         <div>{day4.t1}: {day4.i1}</div>
-//                         <div
-//                             className="detail"
-//                         >
-//                             {day4.t2}: {day4.i2}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Peacepark />
-//                         </section>
-//                         <div className="detail">{day4.t3}: {day4.i3}</div>
-//                         <section className="hidden-box">
-//                             <Jeolmul />
-//                         </section>
-//                         <div
-//                             className="detail"
-//                         >
-//                             {day4.t4}: {day4.i4}
-//                         </div>
-//                         <section className="hidden-box">
-//                             <Dongmun />
-//                         </section>
-//                         <div>{day4.t5}: {day4.i5}</div>
-//                     </div>
-//                 </AnimatedContainer>
-//             )}
-//         </AnimatedContainer>
-//     );
 // }
 
 function Ready() {
-    useThemeColor("#ffffff");
+    ThemeColor("#ffffff");
     return <div className="ready">준비중...</div>;
 }
 
