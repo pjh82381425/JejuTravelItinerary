@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-// 정적 파일 서빙
+// React 정적 빌드 서빙
 app.use(express.static(path.join(__dirname, 'build')));
 
 // SPA fallback
