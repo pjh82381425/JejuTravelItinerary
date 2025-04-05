@@ -98,11 +98,11 @@ function Home() {
                     <div className="title">일정을 선택하세요</div>
                     <div className="team-container">
                     <div className="line" />
-                        <button onClick={() => navigate("/1팀일정")} className="team-button">1팀</button>
+                        <button onClick={() => navigate("/1팀일정")} className="team-button">A팀</button>
                         {/* <div className="line" /> */}
-                        <button onClick={() => navigate("/2팀일정")} className="team-button">2팀</button>
+                        <button onClick={() => navigate("/2팀일정")} className="team-button">B팀</button>
                         {/* <div className="line" /> */}
-                        <button onClick={() => navigate("/3팀일정")} className="team-button">3팀</button>
+                        <button onClick={() => navigate("/3팀일정")} className="team-button">C팀</button>
                     </div>
                 </div>
             <div className="bottom"><a href="https://kr.freepik.com/free-video/sea-waves-breaking-rocky-shore_170909?log-in=google#fromView=keyword&page=1&position=11&uuid=0f0a43d9-e147-43e9-aea0-0da7efa24731">영상출처: freepik</a><p>made by 김호진</p></div>
@@ -127,7 +127,7 @@ function Itinerary1() {
 
     return (
         <AnimatedContainer className="app-itiner">
-            <div className="initer-title">1팀 일정</div>
+            <div className="initer-title">A팀 일정</div>
             <div className="day-menu">
                 <div className="button-container">
                     {[1, 2, 3, 4].map((num) => (
@@ -155,10 +155,10 @@ function Itinerary1() {
                         <div>
                             {day1.t3}: {day1.i3}
                         </div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt" >
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day1.t4}: {day1.i4}
                         </div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day1.t5}: {day1.i5}
                         </div>
                         <div>{day1.t6}: {day1.i6}</div>
@@ -170,20 +170,20 @@ function Itinerary1() {
             {selectedDay === "day2" && (
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day2.t1}: {day2.i1}
                         </div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day2.t2}: {day2.i2}
                         </div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day2.t3}: {day2.i3}
                         </div>
                         <div>{day2.t4}: {day2.i4}</div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day2.t5}: {day2.i5}
                         </div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day2.t6}: {day2.i6}
                         </div>
                         <div>{day2.t7}: {day2.i7}</div>
@@ -195,17 +195,17 @@ function Itinerary1() {
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
                         <div>{day3.t1}: {day3.i1}</div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day3.t2}: {day3.i2}
                         </div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day3.t3}: {day3.i3}
                         </div>
                         <div>{day3.t4}: {day3.i4}</div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day3.t5}: {day3.i5}
                         </div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day3.t6}: {day3.i6}
                         </div>
                         <div>{day3.t7}: {day3.i7}</div>
@@ -217,13 +217,13 @@ function Itinerary1() {
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
                         <div>{day4.t1}: {day4.i1}</div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day4.t2}: {day4.i2}
                         </div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day4.t3}: {day4.i3}
                         </div>
-                        <div onClick={() => OpenLink(railbike_url)} className="detail bt">
+                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
                             {day4.t4}: {day4.i4}
                         </div>
                         <div>{day4.t5}: {day4.i5}</div>

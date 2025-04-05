@@ -17,7 +17,7 @@ app.get('*', (req, res) => {
 });
 
 https.createServer(options, app).listen(443, () => {
-  console.log('✅ HTTPS 서버 실행 중: https://your-domain.com');
+  console.log('✅ HTTPS 서버 실행 중: https://jshigh.xyz');
 });
 
 const http = require('http');
