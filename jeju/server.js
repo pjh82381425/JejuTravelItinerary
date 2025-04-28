@@ -4,11 +4,11 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-// React 정적 빌드 서빙
+// 정적 파일 서빙
 app.use(express.static(path.join(__dirname, 'build')));
 
-// SPA fallback
-app.get('*', (req, res) => {
+// URL이 /api 처럼 API요청일 경우를 대비해서 먼저 분기
+app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
