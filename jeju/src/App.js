@@ -232,7 +232,7 @@ function Home() {
     }, []);
 
     const handleClassSelect = (classNum) => {
-        navigate("/itinerary", { state: { classNum } });
+        navigate("/schedule", { state: { classNum } });
     };
 
     return (
@@ -307,7 +307,7 @@ function Home() {
     );
 }
 
-function Itinerary() {
+function Schedule() {
     ThemeColor("#ffffff");
     const [selectedDay, setSelectedDay] = useState(null);
     const [hovered, setHovered] = useState(null);
@@ -487,7 +487,7 @@ function MainApp() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/itinerary" element={<Itinerary />} />
+            <Route path="/schedule" element={<Schedule />} />
         </Routes>
     );
 }
