@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./App.css";
 
@@ -8,49 +8,172 @@ const yongnuni_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_0
 const aqua_planet_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500565";
 const aqua_guidemap_url = "https://m.aquaplanet.co.kr/contents/jeju/introduce/gallery/second-floor/aquarium.do";
 const seongsan_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500349";
-const jet_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000022073";
 const osulloc_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500457";
-const bonte_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500250";
 const peace_park_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500535";
-const jeolmul_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500570";
-const dongmoon_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500745";
-// const tourist_distribution_url = "https://data.ijto.or.kr/bigdatamap/jeju/widget/main.do";
+const hamdeok_url = "https://visitjeju.net/kr/detail/view?contentsid=CONT_000000000500693";
+const camellia_url = "https://visitjeju.net/kr/detail/view?contentsid=CNTS_000000000001195";
+const jusangjeolli_url = "https://visitjeju.net/kr/detail/view?contentsid=CNTS_000000000020476";
+const cart_url = "";
+const jet_url = "";
+// const tourist_url = "https://data.ijto.or.kr/bigdatamap/jeju/widget/main.do";
+
+const TeamGuide = {
+    "1": ["teamA", "team1"],
+    "2": ["teamC", "team1"],
+    "3": ["teamB", "team1"],
+    "4": ["teamA", "team1"],
+    "5": ["teamB", "team1"],
+    "6": ["teamB", "team2"],
+    "7": ["teamC", "team1"],
+    "8": ["teamB", "team2"],
+    "9": ["teamC", "team2"],
+    "10": ["teamA", "team2"],
+    "11": ["teamC", "team2"],
+    "12": ["teamA", "team1"],
+}
 
 const Teams = {
-    team1: [
-        { day: "day1", t1: "", i1: "" },
-        { day: "day2", t1: "", i1: "" },
-        { day: "day3", t1: "", i1: "" },
-        { day: "day4", t1: "", i1: "" },
+    "teamA": [
+        {
+            day: "day1",
+            t1: "09:30", i1: "김해공항 집결",
+            t2: "11:25", i2: "김해출발 - BX8183",
+            t3: "12:25", i3: "제주도착",
+            t4: "13:30", i4: "중식 - 현지식",
+            t5: "14:30", i5: "4.3평화공원", t5_url: "peace_park_url",
+            t6: "16:00", i6: "용눈이오름", t6_url: "yongnuni_url",
+            t7: "18:30", i7: "숙소 도착 및 방배정",
+            t8: "18:40", i8: "석식 - 숙소(뷔페식)",
+            t9: "19:40", i9: "자유시간 및 취침"
+        },
+        {
+            day: "day4",
+            t1: "07:00", i1: "조식 - 숙소(뷔페식)",
+            t2: "08:30", i2: "숙소 출발",
+            t3: "09:00", i3: "레일바이크", t3_url: "railbike_url",
+            t4: "10:30", i4: "함덕해수욕장", t4_url: "hamdeok_url",
+            t5: "12:00", i5: "중식 - 현지식",
+            t6: "15:00", i6: "제주출발 - BX8110",
+            t7: "16:00", i7: "김해공항 도착 및 귀가 지도"
+        }
     ],
-    team2: [
-        { day: "day1", t1: "", i1: "" },
-        { day: "day2", t1: "", i1: "" },
-        { day: "day3", t1: "", i1: "" },
-        { day: "day4", t1: "", i1: "" },
+    "teamB": [
+        {
+            day: "day1",
+            t1: "11:30", i1: "김해공항 집결",
+            t2: "13:25", i2: "김해출발 - BX8111",
+            t3: "14:25", i3: "제주도착",
+            t4: "15:00", i4: "중식 - 현지식",
+            t5: "16:30", i5: "4.3평화공원", t5_url: "peace_park_url",
+            t6: "18:40", i6: "숙소 도착 및 방배정",
+            t7: "19:00", i7: "석식 - 숙소(뷔페식)",
+            t8: "20:00", i8: "자유시간 및 취침"
+        },
+        {
+            day: "day4",
+            t1: "07:10", i1: "조식 - 숙소(뷔페식)",
+            t2: "08:30", i2: "숙소 출발",
+            t3: "08:40", i3: "용눈이오름", t3_url: "yongnuni_url",
+            t4: "09:30", i4: "레일바이크", t4_url: "railbike_url",
+            t5: "11:50", i5: "함덕해수욕장", t5_url: "hamdeok_url",
+            t6: "13:20", i6: "중식 - 현지식",
+            t7: "16:30", i7: "제주출발 - BX8112",
+            t8: "17:30", i8: "김해공항 도착 및 귀가 지도"
+        }
     ],
-    team3: [
-        { day: "day1", t1: "", i1: "" },
-        { day: "day2", t1: "", i1: "" },
-        { day: "day3", t1: "", i1: "" },
-        { day: "day4", t1: "", i1: "" },
+    "teamC": [
+        {
+            day: "day1",
+            t1: "12:30", i1: "김해공항 집결",
+            t2: "14:30", i2: "김해출발 - BX8115",
+            t3: "15:30", i3: "제주도착",
+            t4: "16:30", i4: "함덕해수욕장", t4_url: "hamdeok_url",
+            t5: "19:00", i5: "숙소 도착 및 방배정",
+            t6: "19:20", i6: "석식 - 숙소(뷔페식)",
+            t7: "20:20", i7: "자유시간 및 취침"
+        },
+        {
+            day: "day4",
+            t1: "07:30", i1: "조식(뷔페식)",
+            t2: "08:50", i2: "숙소 출발",
+            t3: "09:00", i3: "용눈이오름", t3_url: "yongnuni_url",
+            t4: "10:00", i4: "레일바이크", t4_url: "railbike_url",
+            t5: "11:50", i5: "중식 - 현지식",
+            t6: "13:30", i6: "4.3 평화공원", t6_url: "peace_park_url",
+            t7: "16:00", i7: "석식 - 현지식",
+            t8: "18:35", i8: "제주출발 - BX8116",
+            t9: "19:35", i9: "김해공항 도착 및 귀가 지도"
+        }
     ],
-}
+    "team1": [
+        {
+            day: "day2",
+            t1: "07:00", i1: "조식 - 숙소(뷔페식)",
+            t2: "08:30", i2: "숙소 출발",
+            t3: "09:40", i3: "오!설록", t3_url: "osulloc_url",
+            t4: "11:20", i4: "카멜리아힐", t4_url: "camellia_url",
+            t5: "13:00", i5: "중식 - 현지식",
+            t6: "14:50", i6: "주상절리", t6_url: "jusangjeolli_url",
+            t7: "15:40", i7: "제트보트", t7_url: "jet_url",
+            t8: "18:00", i8: "숙소 도착",
+            t9: "18:30", i9: "석식 - 숙소(뷔페식)",
+            t10: "19:30", i10: "자유시간 및 취침"
+        },
+        {
+            day: "day3",
+            t1: "07:20", i1: "조식 - 숙소(뷔페식)",
+            t2: "08:30", i2: "숙소 출발",
+            t3: "08:50", i3: "아쿠아플라넷 - 세계해양수족관", t3_url: "aqua_planet_url",
+            t4: "10:00", i4: "아쿠아플라넷 - 섭지코지 해변광장", t4_url: "aqua_planet_url",
+            t5: "10:50", i5: "아쿠아플라넷 - 아레나공연", t5_url: "aqua_planet_url",
+            t6: "12:00", i6: "중식 - 현지식",
+            t7: "13:20", i7: "카트레이싱", t7_url: "cart_url",
+            t8: "16:00", i8: "성산일출봉", t8_url: "seongsan_url",
+            t9: "18:00", i9: "숙소 도착 & 석식 - 숙소(뷔페식)",
+            t10: "19:30", i10: "레크리에이션",
+            t11: "22:00", i11: "자유시간 및 취침"
+        },
+    ],
+    "team2": [
+        {
+            day: "day2",
+            t1: "07:20", i1: "조식 - 숙소(뷔페식)",
+            t2: "08:30", i2: "숙소 출발",
+            t3: "08:50", i3: "아쿠아플라넷 - 세계해양수족관", t3_url: "aqua_planet_url",
+            t4: "10:00", i4: "아쿠아플라넷 - 섭지코지 해변광장", t4_url: "aqua_planet_url",
+            t5: "10:50", i5: "아쿠아플라넷 - 아레나공연", t5_url: "aqua_planet_url",
+            t6: "12:20", i6: "중식 - 현지식",
+            t7: "13:50", i7: "카트레이싱", t7_url: "cart_url",
+            t8: "16:00", i8: "성산일출봉", t8_url: "seongsan_url",
+            t9: "18:30", i9: "숙소 도착",
+            t10: "18:40", i10: "석식 - 숙소(뷔페식)",
+            t11: "19:40", i11: "자유시간 및 취침"
+        },
+        {
+            day: "day3",
+            t1: "07:00", i1: "조식 - 숙소(뷔페식)",
+            t2: "08:30", i2: "숙소 출발",
+            t3: "09:30", i3: "주상절리", t3_url: "jusangjeolli_url",
+            t4: "10:40", i4: "제트보트", t4_url: "jet_url",
+            t5: "12:30", i5: "중식 - 현지식",
+            t6: "14:00", i6: "카멜리아힐",  t6_url: "camellia_url",
+            t7: "18:00", i7: "숙소 도착&석식-숙소(뷔페식)",
+            t8: "19:30", i8: "레크리에이션",
+            t9: "22:00", i9: "자유시간 및 취침"
+        },
+    ]
+};
 
 const ThemeColor = (color = "#ffffff") => {
     useEffect(() => {
-      let themeColorMeta = document.querySelector("meta[name='theme-color']");
-      if (!themeColorMeta) {
-        themeColorMeta = document.createElement("meta");
-        themeColorMeta.name = "theme-color";
-        document.head.appendChild(themeColorMeta);
-      }
-      themeColorMeta.content = color;
+        let themeColorMeta = document.querySelector("meta[name='theme-color']");
+        if (!themeColorMeta) {
+            themeColorMeta = document.createElement("meta");
+            themeColorMeta.name = "theme-color";
+            document.head.appendChild(themeColorMeta);
+        }
+        themeColorMeta.content = color;
     }, [color]);
-}
-
-function OpenLink(url) {
-    window.open(url, "_blank", "noopener,noreferrer");
 }
 
 function AnimatedContainer({ children, className }) {
@@ -81,53 +204,95 @@ function Home() {
         setVideoReady(true);
     };
 
+    const handleClassSelect = (classNum) => {
+        navigate("/itinerary", { state: { classNum } });
+    };
+
     return (
         <div className="app">
             <div className="bg-video">
-            <video
-            className={`bg-video__content ${videoReady ? 'show' : ''}`}
-            autoPlay
-            muted
-            playsInline
-            onCanPlayThrough={handleVideoReady}>
+                <video
+                    className={`bg-video__content ${videoReady ? 'show' : ''}`}
+                    autoPlay
+                    muted
+                    playsInline
+                    onCanPlayThrough={handleVideoReady}>
                     <source src="/background.mp4" type="video/mp4" />
                     브자우저가 비디오 태그를 지원하지 않습니다.
                 </video>
             </div>
-                <div className="container">
-                    <div className="title">일정을 선택하세요</div>
-                    <div className="team-container">
+            <div className="container">
+                <div className="title">일정을 선택하세요</div>
+                <div className="team-container">
                     <div className="line" />
-                        <button onClick={() => navigate("/1팀일정")} className="team-button">A팀</button>
-                        {/* <div className="line" /> */}
-                        <button onClick={() => navigate("/2팀일정")} className="team-button">B팀</button>
-                        {/* <div className="line" /> */}
-                        <button onClick={() => navigate("/3팀일정")} className="team-button">C팀</button>
+                    <div className="class-selector">
+                        {Array.from({ length: 12 }, (_, i) => (
+                            <button
+                                key={i + 1}
+                                onClick={() => handleClassSelect(i + 1)}
+                            >
+                                {i + 1}반
+                            </button>
+                        ))}
                     </div>
                 </div>
+            </div>
             <div className="bottom"><a href="https://kr.freepik.com/free-video/sea-waves-breaking-rocky-shore_170909?log-in=google#fromView=keyword&page=1&position=11&uuid=0f0a43d9-e147-43e9-aea0-0da7efa24731">영상출처: freepik</a><p>made by 김호진</p></div>
         </div>
     );
 }
 
-function Itinerary1() {
+function Itinerary() {
     ThemeColor("#ffffff");
     const [selectedDay, setSelectedDay] = useState(null);
     const [hovered, setHovered] = useState(null);
 
-    const day1 = Teams['team1'].find(item => item.day === 'day1');
-    const day2 = Teams['team1'].find(item => item.day === 'day2');
-    const day3 = Teams['team1'].find(item => item.day === 'day3');
-    const day4 = Teams['team1'].find(item => item.day === 'day4');
+    const location = useLocation();
+    const classNum = location.state?.classNum;
+
+    if (!classNum || !TeamGuide[classNum]) {
+        return <div>비정상적인 접근입니다.</div>;
+    }
+
+    const [teamX, teamY] = TeamGuide[classNum];
+    const Itinerary1And4Day = Teams[teamX] || [];
+    const Itinerary2And3Day = Teams[teamY] || [];
+
+    const day1 = Itinerary1And4Day[0];
+    const day2 = Itinerary2And3Day[0];
+    const day3 = Itinerary2And3Day[1];
+    const day4 = Itinerary1And4Day[1];
 
     // 각 일자 클릭 시 호출되는 함수
     const handleDayClick = (day) => {
         setSelectedDay(day);
     };
 
+    // 사용 가능한 URL 변수들을 한 곳에 모아둔 맵
+    const urlMap = {
+        railbike_url,
+        yongnuni_url,
+        aqua_planet_url,
+        aqua_guidemap_url,
+        seongsan_url,
+        jet_url,
+        osulloc_url,
+        peace_park_url,
+        hamdeok_url,
+        camellia_url,
+        jusangjeolli_url,
+        cart_url
+    };
+
+    // urlMap에서 name에 대응되는 URL을 반환
+    const getUrlVar = (name) => {
+        // urlMap에 해당 키가 있으면 그 값을, 없으면 undefined 반환
+        return urlMap[name];
+    };
+
     return (
         <AnimatedContainer className="app-itiner">
-            <div className="initer-title">A팀 일정</div>
+            <div className="initer-title">{classNum}반 일정</div>
             <div className="day-menu">
                 <div className="button-container">
                     {[1, 2, 3, 4].map((num) => (
@@ -148,21 +313,24 @@ function Itinerary1() {
             {selectedDay === "day1" && (
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
-                        <div>{day1.t1}: {day1.i1}</div>
-                        <div>
-                            {day1.t2}: {day1.i2}
-                        </div>
-                        <div>
-                            {day1.t3}: {day1.i3}
-                        </div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day1.t4}: {day1.i4}
-                        </div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day1.t5}: {day1.i5}
-                        </div>
-                        <div>{day1.t6}: {day1.i6}</div>
-                        <div>{day1.t7}: {day1.i7}</div>
+                        {Object.keys(day1)
+                            .filter((key) => key.startsWith("t") && !key.includes("_"))
+                            .map((tKey) => {
+                                const time = day1[tKey];
+                                const idx = tKey.substring(1);
+                                const info = day1[`i${idx}`];
+                                const urlKey = day1[`${tKey}_url`];
+                                const url = getUrlVar(urlKey);            // 실제 URL 변수 값 찾아오기
+                                const hasUrl = typeof url === "string";
+                                const className = hasUrl ? "detail bt" : "";
+                                const onClick = hasUrl ? () => { window.location.href = url; } : undefined;
+
+                                return (
+                                    <div key={tKey} className={className} onClick={onClick}>
+                                        {time}: {info}
+                                    </div>
+                                );
+                            })}
                     </div>
                 </AnimatedContainer>
             )}
@@ -170,23 +338,24 @@ function Itinerary1() {
             {selectedDay === "day2" && (
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day2.t1}: {day2.i1}
-                        </div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day2.t2}: {day2.i2}
-                        </div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day2.t3}: {day2.i3}
-                        </div>
-                        <div>{day2.t4}: {day2.i4}</div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day2.t5}: {day2.i5}
-                        </div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day2.t6}: {day2.i6}
-                        </div>
-                        <div>{day2.t7}: {day2.i7}</div>
+                        {Object.keys(day2)
+                            .filter((key) => key.startsWith("t") && !key.includes("_"))
+                            .map((tKey) => {
+                                const time = day2[tKey];
+                                const idx = tKey.substring(1);
+                                const info = day2[`i${idx}`];
+                                const urlKey = day2[`${tKey}_url`];
+                                const url = getUrlVar(urlKey);            // 실제 URL 변수 값 찾아오기
+                                const hasUrl = typeof url === "string";
+                                const className = hasUrl ? "detail bt" : "";
+                                const onClick = hasUrl ? () => { window.location.href = url; } : undefined;
+
+                                return (
+                                    <div key={tKey} className={className} onClick={onClick}>
+                                        {time}: {info}
+                                    </div>
+                                );
+                            })}
                     </div>
                 </AnimatedContainer>
             )}
@@ -194,21 +363,24 @@ function Itinerary1() {
             {selectedDay === "day3" && (
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
-                        <div>{day3.t1}: {day3.i1}</div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day3.t2}: {day3.i2}
-                        </div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day3.t3}: {day3.i3}
-                        </div>
-                        <div>{day3.t4}: {day3.i4}</div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day3.t5}: {day3.i5}
-                        </div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day3.t6}: {day3.i6}
-                        </div>
-                        <div>{day3.t7}: {day3.i7}</div>
+                        {Object.keys(day3)
+                            .filter((key) => key.startsWith("t") && !key.includes("_"))
+                            .map((tKey) => {
+                                const time = day3[tKey];
+                                const idx = tKey.substring(1);
+                                const info = day3[`i${idx}`];
+                                const urlKey = day3[`${tKey}_url`];
+                                const url = getUrlVar(urlKey);            // 실제 URL 변수 값 찾아오기
+                                const hasUrl = typeof url === "string";
+                                const className = hasUrl ? "detail bt" : "";
+                                const onClick = hasUrl ? () => { window.location.href = url; } : undefined;
+
+                                return (
+                                    <div key={tKey} className={className} onClick={onClick}>
+                                        {time}: {info}
+                                    </div>
+                                );
+                            })}
                     </div>
                 </AnimatedContainer>
             )}
@@ -216,29 +388,30 @@ function Itinerary1() {
             {selectedDay === "day4" && (
                 <AnimatedContainer className="day-box">
                     <div className="day-detail-box">
-                        <div>{day4.t1}: {day4.i1}</div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day4.t2}: {day4.i2}
-                        </div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day4.t3}: {day4.i3}
-                        </div>
-                        <div className="detail bt" onClick={() => window.location.href = railbike_url}>
-                            {day4.t4}: {day4.i4}
-                        </div>
-                        <div>{day4.t5}: {day4.i5}</div>
+                        {Object.keys(day4)
+                            .filter((key) => key.startsWith("t") && !key.includes("_"))
+                            .map((tKey) => {
+                                const time = day4[tKey];
+                                const idx = tKey.substring(1);
+                                const info = day4[`i${idx}`];
+                                const urlKey = day4[`${tKey}_url`];
+                                const url = getUrlVar(urlKey);            // 실제 URL 변수 값 찾아오기
+                                const hasUrl = typeof url === "string";
+                                const className = hasUrl ? "detail bt" : "";
+                                const onClick = hasUrl ? () => { window.location.href = url; } : undefined;
+
+                                return (
+                                    <div key={tKey} className={className} onClick={onClick}>
+                                        {time}: {info}
+                                    </div>
+                                );
+                            })}
                     </div>
                 </AnimatedContainer>
             )}
         </AnimatedContainer>
     );
 }
-
-// function Itinerary2() {
-// }
-
-// function Itinerary3() {
-// }
 
 function Ready() {
     ThemeColor("#ffffff");
@@ -249,9 +422,7 @@ function MainApp() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/1팀일정" element={<Itinerary1 />} />
-            <Route path="/2팀일정" element={<Ready />} />
-            <Route path="/3팀일정" element={<Ready />} />
+            <Route path="/itinerary" element={<Itinerary />} />
         </Routes>
     );
 }
