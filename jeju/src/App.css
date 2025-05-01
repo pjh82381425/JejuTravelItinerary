@@ -206,6 +206,28 @@ a:any-link {
   animation-iteration-count: 1;
 }
 
-/* 반응형 css */
+/* iOS·Safari */
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
 
-/*  */
+/* Chrome·Edge */
+video::-internal-media-controls-download-button,
+video::-internal-media-controls-overflow-button {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* Firefox */
+video::-moz-media-controls-play-button,
+video::-moz-media-controls-panel {
+  display: none !important;
+}
+
+/* 반응형 css */

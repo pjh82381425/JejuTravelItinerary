@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BrowserRouter, Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./App.css";
@@ -156,7 +156,7 @@ const Teams = {
             t3: "09:30", i3: "주상절리", t3_url: "jusangjeolli_url",
             t4: "10:40", i4: "제트보트", t4_url: "jet_url",
             t5: "12:30", i5: "중식 - 현지식",
-            t6: "14:00", i6: "카멜리아힐",  t6_url: "camellia_url",
+            t6: "14:00", i6: "카멜리아힐", t6_url: "camellia_url",
             t7: "18:00", i7: "숙소 도착&석식-숙소(뷔페식)",
             t8: "19:30", i8: "레크리에이션",
             t9: "22:00", i9: "자유시간 및 취침"
@@ -199,10 +199,37 @@ function Home() {
     ThemeColor("#aac4df");
     const navigate = useNavigate();
     const [videoReady, setVideoReady] = useState(false);
+    const [useFallback, setUseFallback] = useState(false);
+    const videoRef = useRef(null);
 
+    // 비디오 로드 완료 시 자동재생 시도
     const handleVideoReady = () => {
         setVideoReady(true);
+        videoRef.current
+            .play()
+            .catch(() => {
+                // 재생 실패 시 fallback 모드로 전환
+                setUseFallback(true);
+            });
     };
+
+    useEffect(() => {
+        const vid = videoRef.current;
+        if (vid) {
+          vid.muted = true;
+          vid.playsInline = true;
+          vid.loop = true;
+          vid.setAttribute("playsinline", "");
+          vid.setAttribute("webkit-playsinline", "");
+          vid.setAttribute("preload", "auto");
+          vid.addEventListener("loadeddata", handleVideoReady);
+        }
+        return () => {
+          if (vid) {
+            vid.removeEventListener("loadeddata", handleVideoReady);
+          }
+        };
+      }, []);
 
     const handleClassSelect = (classNum) => {
         navigate("/itinerary", { state: { classNum } });
@@ -211,33 +238,55 @@ function Home() {
     return (
         <div className="app">
             <div className="bg-video">
-                <video
-                    className={`bg-video__content ${videoReady ? 'show' : ''}`}
-                    autoPlay
-                    muted
-                    playsInline
-                    onCanPlayThrough={handleVideoReady}>
-                    <source src="/background.mp4" type="video/mp4" />
-                    브자우저가 비디오 태그를 지원하지 않습니다.
-                </video>
+                {useFallback ? (
+                    <div
+                        className="bg-fallback"
+                        style={{
+                            backgroundImage: 'url("/fallback.png")',
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            width: "100%",
+                            height: "100vh",
+                        }}
+                    />
+                ) : (
+                    <video
+                        ref={videoRef}
+                        className={`bg-video__content ${videoReady ? "show" : ""}`}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="auto"
+                        playsinline
+                        webkit-playsinline
+                    >
+                        <source src="/background.mp4" type="video/mp4" />
+                        브라우저가 비디오 태그를 지원하지 않습니다.
+                    </video>
+                )}
             </div>
+
             <div className="container">
                 <div className="title">일정을 선택하세요</div>
                 <div className="team-container">
                     <div className="line" />
                     <div className="class-selector">
                         {Array.from({ length: 12 }, (_, i) => (
-                            <button
-                                key={i + 1}
-                                onClick={() => handleClassSelect(i + 1)}
-                            >
+                            <button key={i + 1} onClick={() => handleClassSelect(i + 1)}>
                                 {i + 1}반
                             </button>
                         ))}
                     </div>
                 </div>
             </div>
-            <div className="bottom"><a href="https://kr.freepik.com/free-video/sea-waves-breaking-rocky-shore_170909?log-in=google#fromView=keyword&page=1&position=11&uuid=0f0a43d9-e147-43e9-aea0-0da7efa24731">영상출처: freepik</a><p>made by 김호진</p></div>
+
+            <div className="bottom">
+                <a href="https://kr.freepik.com/free-video/sea-waves-breaking-rocky-shore_170909">
+                    영상출처: freepik
+                </a>
+                <p>made by 김호진</p>
+            </div>
         </div>
     );
 }
