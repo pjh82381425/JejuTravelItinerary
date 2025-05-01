@@ -216,20 +216,20 @@ function Home() {
     useEffect(() => {
         const vid = videoRef.current;
         if (vid) {
-          vid.muted = true;
-          vid.playsInline = true;
-          vid.loop = true;
-          vid.setAttribute("playsinline", "");
-          vid.setAttribute("webkit-playsinline", "");
-          vid.setAttribute("preload", "auto");
-          vid.addEventListener("loadeddata", handleVideoReady);
+            vid.muted = true;
+            vid.playsInline = true;
+            vid.loop = true;
+            vid.setAttribute("playsinline", "");
+            vid.setAttribute("webkit-playsinline", "");
+            vid.setAttribute("preload", "auto");
+            vid.addEventListener("loadeddata", handleVideoReady);
         }
         return () => {
-          if (vid) {
-            vid.removeEventListener("loadeddata", handleVideoReady);
-          }
+            if (vid) {
+                vid.removeEventListener("loadeddata", handleVideoReady);
+            }
         };
-      }, []);
+    }, []);
 
     const handleClassSelect = (classNum) => {
         navigate("/itinerary", { state: { classNum } });
@@ -268,7 +268,7 @@ function Home() {
             </div>
 
             <div className="container">
-                <div className="title">일정을 선택하세요</div>
+                <div className="title">여행 일정을 선택해 주세요</div>
                 <div className="team-container">
                     <div className="line" />
                     <div className="class-selector">
@@ -277,6 +277,23 @@ function Home() {
                                 {i + 1}반
                             </button>
                         ))}
+                    </div>
+                    <div className="m-class-selector">
+                        <select
+                            className="class-select-dropdown"
+                            defaultValue=""
+                            onChange={(e) => handleClassSelect(Number(e.target.value))}
+                        >
+                            <option value="" disabled>
+                                선택하기
+                            </option>
+                            {Array.from({ length: 12 }, (_, i) => (
+                                <option key={i + 1} value={i + 1}>
+                                    {i + 1}반
+                                </option>
+                            ))}
+                        </select>
+
                     </div>
                 </div>
             </div>
