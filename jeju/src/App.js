@@ -267,7 +267,7 @@ function Home() {
             </div>
 
             <div className="container">
-                <div className="title">여행 일정을 선택해 주세요</div>
+                <div className="title">여행 일정을 확인해 보세요</div>
                 <div className="team-container">
                     <div className="line" />
                     <div className="class-selector">
@@ -284,7 +284,7 @@ function Home() {
                             onChange={(e) => handleClassSelect(Number(e.target.value))}
                         >
                             <option value="" disabled>
-                                선택하기
+                                확인하기
                             </option>
                             {Array.from({ length: 12 }, (_, i) => (
                                 <option key={i + 1} value={i + 1}>
