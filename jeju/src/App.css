@@ -45,10 +45,11 @@ body {
 
 .container {
   display: grid;
+  padding: 15px;
   padding-top: 100px;
-  gap: 10px;
+  gap: 15px;
   text-align: center;
-  margin: 10px;
+  background: linear-gradient(to bottom, #aac4df, #ffffff00);
 }
 
 .title {

@@ -218,7 +218,7 @@ function Home() {
         if (vid) {
             vid.muted = true;
             vid.playsInline = true;
-            vid.loop = true;
+            vid.loop = false;
             vid.setAttribute("playsinline", "");
             vid.setAttribute("webkit-playsinline", "");
             vid.setAttribute("preload", "auto");
@@ -255,7 +255,6 @@ function Home() {
                         className={`bg-video__content ${videoReady ? "show" : ""}`}
                         autoPlay
                         muted
-                        loop
                         playsInline
                         preload="auto"
                         playsinline
