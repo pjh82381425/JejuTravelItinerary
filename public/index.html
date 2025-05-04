@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>제주 콘텐츠 조회</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    label, button {
+      font-size: 1rem;
+    }
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 300px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      cursor: pointer;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>제주 관광 콘텐츠 조회</h1>
+
+  <div>
+    <label for="cid">콘텐츠 ID (CID)</label>
+    <input type="text" id="cid" value="CNTS_000000000001195">
+    <button id="fetchBtn">조회</button>
+  </div>
+
+  <pre id="result">여기에 결과가 표시됩니다.</pre>
+
+  <script>
+    // 조회 버튼 클릭하면 서버의 /content/:cid 엔드포인트 호출
+    document.getElementById('fetchBtn').addEventListener('click', async () => {
+      const cid = document.getElementById('cid').value.trim()
+      if (!cid) {
+        alert('CID를 입력해주세요')
+        return
+      }
+
+      const resultEl = document.getElementById('result')
+      resultEl.textContent = '로딩 중...'
+
+      try {
+        // same-origin이라면 절대경로 없이 사용 가능
+        const response = await fetch(`/content/${encodeURIComponent(cid)}`)
+        if (!response.ok) {
+          throw new Error(`응답 오류: ${response.status}`)
+        }
+        const data = await response.json()
+        // 예쁘게 JSON 문자열로 변환해서 출력
+        resultEl.textContent = JSON.stringify(data, null, 2)
+      }
+      catch (error) {
+        console.error('조회 중 오류 발생:', error)
+        resultEl.textContent = '데이터 조회 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.'
+      }
+    })
+  </script>
+</body>
+</html>

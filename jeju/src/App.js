@@ -1,21 +1,45 @@
 import React, { useEffect, useState, useRef } from "react";
 import { BrowserRouter, Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from 'axios'
+
 import "./App.css";
 
-const railbike_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CNTS_000000000020139";
-const yongnuni_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500466&menuId=DOM_000001718002000000";
-const aqua_planet_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500565";
-const aqua_guidemap_url = "https://m.aquaplanet.co.kr/contents/jeju/introduce/gallery/second-floor/aquarium.do";
-const seongsan_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500349";
-const osulloc_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500457";
-const peace_park_url = "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500535";
-const hamdeok_url = "https://visitjeju.net/kr/detail/view?contentsid=CONT_000000000500693";
-const camellia_url = "https://visitjeju.net/kr/detail/view?contentsid=CNTS_000000000001195";
-const jusangjeolli_url = "https://visitjeju.net/kr/detail/view?contentsid=CNTS_000000000020476";
-const cart_url = "";
-const jet_url = "";
-// const tourist_url = "https://data.ijto.or.kr/bigdatamap/jeju/widget/main.do";
+const ERROR_LOG_API_KEY = process.env.REACT_APP_API_KEY;
+
+if (!ERROR_LOG_API_KEY) {
+    console.error("ERROR_LOG_API_KEY가 설정되지 않았습니다.");
+}
+
+export async function saveErrorLog(message, context = {}) {
+    try {
+        await axios.post('/ReactErrorLog', {
+            message,
+            context,
+            timestamp: new Date().toISOString()
+        }, {
+            headers: {
+                'X-API-KEY': ERROR_LOG_API_KEY
+            }
+        });
+    } catch (err) {
+        console.warn('로그를 전송하는 중에 문제가 발생했습니다.', err);
+    }
+}
+
+const railbike_cid = "CNTS_000000000020139";
+const yongnuni_cid = "CONT_000000000500466";
+const aqua_planet_cid = "CONT_000000000500565";
+const aqua_guidemap_cid = "CONT_000000000500565";
+const seongsan_cid = "CONT_000000000500349";
+const osulloc_cid = "CONT_000000000500457";
+const peace_park_cid = "CONT_000000000500535";
+const hamdeok_cid = "CONT_000000000500693";
+const camellia_cid = "CNTS_000000000001195";
+const jusangjeolli_cid = "CNTS_000000000020476";
+const cart_cid = "";
+const jet_cid = "";
+// const tourist_cid = "https://data.ijto.or.kr/bigdatamap/jeju/widget/main.do";
 
 const TeamGuide = {
     "1": ["teamA", "team1"],
@@ -40,8 +64,8 @@ const Teams = {
             t2: "11:25", i2: "김해출발 - BX8183",
             t3: "12:25", i3: "제주도착",
             t4: "13:30", i4: "중식 - 현지식",
-            t5: "14:30", i5: "4.3평화공원", t5_url: "peace_park_url",
-            t6: "16:00", i6: "용눈이오름", t6_url: "yongnuni_url",
+            t5: "14:30", i5: "4.3평화공원", t5_cid: "peace_park_cid",
+            t6: "16:00", i6: "용눈이오름", t6_cid: "yongnuni_cid",
             t7: "18:30", i7: "숙소 도착 및 방배정",
             t8: "18:40", i8: "석식 - 숙소(뷔페식)",
             t9: "19:40", i9: "자유시간 및 취침"
@@ -50,8 +74,8 @@ const Teams = {
             day: "day4",
             t1: "07:00", i1: "조식 - 숙소(뷔페식)",
             t2: "08:30", i2: "숙소 출발",
-            t3: "09:00", i3: "레일바이크", t3_url: "railbike_url",
-            t4: "10:30", i4: "함덕해수욕장", t4_url: "hamdeok_url",
+            t3: "09:00", i3: "레일바이크", t3_cid: "railbike_cid",
+            t4: "10:30", i4: "함덕해수욕장", t4_cid: "hamdeok_cid",
             t5: "12:00", i5: "중식 - 현지식",
             t6: "15:00", i6: "제주출발 - BX8110",
             t7: "16:00", i7: "김해공항 도착 및 귀가 지도"
@@ -64,7 +88,7 @@ const Teams = {
             t2: "13:25", i2: "김해출발 - BX8111",
             t3: "14:25", i3: "제주도착",
             t4: "15:00", i4: "중식 - 현지식",
-            t5: "16:30", i5: "4.3평화공원", t5_url: "peace_park_url",
+            t5: "16:30", i5: "4.3평화공원", t5_cid: "peace_park_cid",
             t6: "18:40", i6: "숙소 도착 및 방배정",
             t7: "19:00", i7: "석식 - 숙소(뷔페식)",
             t8: "20:00", i8: "자유시간 및 취침"
@@ -73,9 +97,9 @@ const Teams = {
             day: "day4",
             t1: "07:10", i1: "조식 - 숙소(뷔페식)",
             t2: "08:30", i2: "숙소 출발",
-            t3: "08:40", i3: "용눈이오름", t3_url: "yongnuni_url",
-            t4: "09:30", i4: "레일바이크", t4_url: "railbike_url",
-            t5: "11:50", i5: "함덕해수욕장", t5_url: "hamdeok_url",
+            t3: "08:40", i3: "용눈이오름", t3_cid: "yongnuni_cid",
+            t4: "09:30", i4: "레일바이크", t4_cid: "railbike_cid",
+            t5: "11:50", i5: "함덕해수욕장", t5_cid: "hamdeok_cid",
             t6: "13:20", i6: "중식 - 현지식",
             t7: "16:30", i7: "제주출발 - BX8112",
             t8: "17:30", i8: "김해공항 도착 및 귀가 지도"
@@ -87,7 +111,7 @@ const Teams = {
             t1: "12:30", i1: "김해공항 집결",
             t2: "14:30", i2: "김해출발 - BX8115",
             t3: "15:30", i3: "제주도착",
-            t4: "16:30", i4: "함덕해수욕장", t4_url: "hamdeok_url",
+            t4: "16:30", i4: "함덕해수욕장", t4_cid: "hamdeok_cid",
             t5: "19:00", i5: "숙소 도착 및 방배정",
             t6: "19:20", i6: "석식 - 숙소(뷔페식)",
             t7: "20:20", i7: "자유시간 및 취침"
@@ -96,10 +120,10 @@ const Teams = {
             day: "day4",
             t1: "07:30", i1: "조식(뷔페식)",
             t2: "08:50", i2: "숙소 출발",
-            t3: "09:00", i3: "용눈이오름", t3_url: "yongnuni_url",
-            t4: "10:00", i4: "레일바이크", t4_url: "railbike_url",
+            t3: "09:00", i3: "용눈이오름", t3_cid: "yongnuni_cid",
+            t4: "10:00", i4: "레일바이크", t4_cid: "railbike_cid",
             t5: "11:50", i5: "중식 - 현지식",
-            t6: "13:30", i6: "4.3 평화공원", t6_url: "peace_park_url",
+            t6: "13:30", i6: "4.3 평화공원", t6_cid: "peace_park_cid",
             t7: "16:00", i7: "석식 - 현지식",
             t8: "18:35", i8: "제주출발 - BX8116",
             t9: "19:35", i9: "김해공항 도착 및 귀가 지도"
@@ -110,11 +134,11 @@ const Teams = {
             day: "day2",
             t1: "07:00", i1: "조식 - 숙소(뷔페식)",
             t2: "08:30", i2: "숙소 출발",
-            t3: "09:40", i3: "오!설록", t3_url: "osulloc_url",
-            t4: "11:20", i4: "카멜리아힐", t4_url: "camellia_url",
+            t3: "09:40", i3: "오!설록", t3_cid: "osulloc_cid",
+            t4: "11:20", i4: "카멜리아힐", t4_cid: "camellia_cid",
             t5: "13:00", i5: "중식 - 현지식",
-            t6: "14:50", i6: "주상절리", t6_url: "jusangjeolli_url",
-            t7: "15:40", i7: "제트보트", t7_url: "jet_url",
+            t6: "14:50", i6: "주상절리", t6_cid: "jusangjeolli_cid",
+            t7: "15:40", i7: "제트보트", t7_cid: "jet_cid",
             t8: "18:00", i8: "숙소 도착",
             t9: "18:30", i9: "석식 - 숙소(뷔페식)",
             t10: "19:30", i10: "자유시간 및 취침"
@@ -123,12 +147,12 @@ const Teams = {
             day: "day3",
             t1: "07:20", i1: "조식 - 숙소(뷔페식)",
             t2: "08:30", i2: "숙소 출발",
-            t3: "08:50", i3: "아쿠아플라넷 - 세계해양수족관", t3_url: "aqua_planet_url",
-            t4: "10:00", i4: "아쿠아플라넷 - 섭지코지 해변광장", t4_url: "aqua_planet_url",
-            t5: "10:50", i5: "아쿠아플라넷 - 아레나공연", t5_url: "aqua_planet_url",
+            t3: "08:50", i3: "아쿠아플라넷 - 세계해양수족관", t3_cid: "aqua_planet_cid",
+            t4: "10:00", i4: "아쿠아플라넷 - 섭지코지 해변광장", t4_cid: "aqua_planet_cid",
+            t5: "10:50", i5: "아쿠아플라넷 - 아레나공연", t5_cid: "aqua_planet_cid",
             t6: "12:00", i6: "중식 - 현지식",
-            t7: "13:20", i7: "카트레이싱", t7_url: "cart_url",
-            t8: "16:00", i8: "성산일출봉", t8_url: "seongsan_url",
+            t7: "13:20", i7: "카트레이싱", t7_cid: "cart_cid",
+            t8: "16:00", i8: "성산일출봉", t8_cid: "seongsan_cid",
             t9: "18:00", i9: "숙소 도착 & 석식 - 숙소(뷔페식)",
             t10: "19:30", i10: "레크리에이션",
             t11: "22:00", i11: "자유시간 및 취침"
@@ -139,12 +163,12 @@ const Teams = {
             day: "day2",
             t1: "07:20", i1: "조식 - 숙소(뷔페식)",
             t2: "08:30", i2: "숙소 출발",
-            t3: "08:50", i3: "아쿠아플라넷 - 세계해양수족관", t3_url: "aqua_planet_url",
-            t4: "10:00", i4: "아쿠아플라넷 - 섭지코지 해변광장", t4_url: "aqua_planet_url",
-            t5: "10:50", i5: "아쿠아플라넷 - 아레나공연", t5_url: "aqua_planet_url",
+            t3: "08:50", i3: "아쿠아플라넷 - 세계해양수족관", t3_cid: "aqua_planet_cid",
+            t4: "10:00", i4: "아쿠아플라넷 - 섭지코지 해변광장", t4_cid: "aqua_planet_cid",
+            t5: "10:50", i5: "아쿠아플라넷 - 아레나공연", t5_cid: "aqua_planet_cid",
             t6: "12:20", i6: "중식 - 현지식",
-            t7: "13:50", i7: "카트레이싱", t7_url: "cart_url",
-            t8: "16:00", i8: "성산일출봉", t8_url: "seongsan_url",
+            t7: "13:50", i7: "카트레이싱", t7_cid: "cart_cid",
+            t8: "16:00", i8: "성산일출봉", t8_cid: "seongsan_cid",
             t9: "18:30", i9: "숙소 도착",
             t10: "18:40", i10: "석식 - 숙소(뷔페식)",
             t11: "19:40", i11: "자유시간 및 취침"
@@ -153,10 +177,10 @@ const Teams = {
             day: "day3",
             t1: "07:00", i1: "조식 - 숙소(뷔페식)",
             t2: "08:30", i2: "숙소 출발",
-            t3: "09:30", i3: "주상절리", t3_url: "jusangjeolli_url",
-            t4: "10:40", i4: "제트보트", t4_url: "jet_url",
+            t3: "09:30", i3: "주상절리", t3_cid: "jusangjeolli_cid",
+            t4: "10:40", i4: "제트보트", t4_cid: "jet_cid",
             t5: "12:30", i5: "중식 - 현지식",
-            t6: "14:00", i6: "카멜리아힐", t6_url: "camellia_url",
+            t6: "14:00", i6: "카멜리아힐", t6_cid: "camellia_cid",
             t7: "18:00", i7: "숙소 도착&석식-숙소(뷔페식)",
             t8: "19:30", i8: "레크리에이션",
             t9: "22:00", i9: "자유시간 및 취침"
@@ -232,7 +256,7 @@ function Home() {
     }, []);
 
     const handleClassSelect = (classNum) => {
-        navigate("/schedule", { state: { classNum } });
+        navigate("/일정", { state: { classNum } });
     };
 
     return (
@@ -242,7 +266,7 @@ function Home() {
                     <div
                         className="bg-fallback"
                         style={{
-                            backgroundImage: 'url("/fallback.png")',
+                            backgroundImage: 'cid("/fallback.png")',
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             width: "100%",
@@ -309,6 +333,7 @@ function Home() {
 
 function Schedule() {
     ThemeColor("#ffffff");
+    const navigate = useNavigate();
     const [selectedDay, setSelectedDay] = useState(null);
     const [hovered, setHovered] = useState(null);
 
@@ -333,26 +358,30 @@ function Schedule() {
         setSelectedDay(day);
     };
 
-    // 사용 가능한 URL 변수들을 한 곳에 모아둔 맵
-    const urlMap = {
-        railbike_url,
-        yongnuni_url,
-        aqua_planet_url,
-        aqua_guidemap_url,
-        seongsan_url,
-        jet_url,
-        osulloc_url,
-        peace_park_url,
-        hamdeok_url,
-        camellia_url,
-        jusangjeolli_url,
-        cart_url
+    // 사용 가능한 cid 변수들을 한 곳에 모아둔 맵
+    const cidMap = {
+        railbike_cid,
+        yongnuni_cid,
+        aqua_planet_cid,
+        aqua_guidemap_cid,
+        seongsan_cid,
+        jet_cid,
+        osulloc_cid,
+        peace_park_cid,
+        hamdeok_cid,
+        camellia_cid,
+        jusangjeolli_cid,
+        cart_cid
     };
 
-    // urlMap에서 name에 대응되는 URL을 반환
-    const getUrlVar = (name) => {
-        // urlMap에 해당 키가 있으면 그 값을, 없으면 undefined 반환
-        return urlMap[name];
+    // cidMap에서 name에 대응되는 cid을 반환
+    const getcidVar = (name) => {
+        // cidMap에 해당 키가 있으면 그 값을, 없으면 undefined 반환
+        return cidMap[name];
+    };
+
+    const handleClassSelect = (cid) => {
+        navigate(`/상세일정/${cid}`);
     };
 
     return (
@@ -384,11 +413,11 @@ function Schedule() {
                                 const time = day1[tKey];
                                 const idx = tKey.substring(1);
                                 const info = day1[`i${idx}`];
-                                const urlKey = day1[`${tKey}_url`];
-                                const url = getUrlVar(urlKey);            // 실제 URL 변수 값 찾아오기
-                                const hasUrl = typeof url === "string";
-                                const className = hasUrl ? "detail bt" : "";
-                                const onClick = hasUrl ? () => { window.location.href = url; } : undefined;
+                                const cidKey = day1[`${tKey}_cid`];
+                                const cid = getcidVar(cidKey);            // 실제 cid 변수 값 찾아오기
+                                const hascid = typeof cid === "string";
+                                const className = hascid ? "detail bt" : "";
+                                const onClick = hascid ? () => { handleClassSelect(cid) } : undefined;
 
                                 return (
                                     <div key={tKey} className={className} onClick={onClick}>
@@ -409,11 +438,11 @@ function Schedule() {
                                 const time = day2[tKey];
                                 const idx = tKey.substring(1);
                                 const info = day2[`i${idx}`];
-                                const urlKey = day2[`${tKey}_url`];
-                                const url = getUrlVar(urlKey);            // 실제 URL 변수 값 찾아오기
-                                const hasUrl = typeof url === "string";
-                                const className = hasUrl ? "detail bt" : "";
-                                const onClick = hasUrl ? () => { window.location.href = url; } : undefined;
+                                const cidKey = day2[`${tKey}_cid`];
+                                const cid = getcidVar(cidKey);            // 실제 cid 변수 값 찾아오기
+                                const hascid = typeof cid === "string";
+                                const className = hascid ? "detail bt" : "";
+                                const onClick = hascid ? () => { handleClassSelect(cid) } : undefined;
 
                                 return (
                                     <div key={tKey} className={className} onClick={onClick}>
@@ -434,11 +463,11 @@ function Schedule() {
                                 const time = day3[tKey];
                                 const idx = tKey.substring(1);
                                 const info = day3[`i${idx}`];
-                                const urlKey = day3[`${tKey}_url`];
-                                const url = getUrlVar(urlKey);            // 실제 URL 변수 값 찾아오기
-                                const hasUrl = typeof url === "string";
-                                const className = hasUrl ? "detail bt" : "";
-                                const onClick = hasUrl ? () => { window.location.href = url; } : undefined;
+                                const cidKey = day3[`${tKey}_cid`];
+                                const cid = getcidVar(cidKey);            // 실제 cid 변수 값 찾아오기
+                                const hascid = typeof cid === "string";
+                                const className = hascid ? "detail bt" : "";
+                                const onClick = hascid ? () => { handleClassSelect(cid) } : undefined;
 
                                 return (
                                     <div key={tKey} className={className} onClick={onClick}>
@@ -459,11 +488,11 @@ function Schedule() {
                                 const time = day4[tKey];
                                 const idx = tKey.substring(1);
                                 const info = day4[`i${idx}`];
-                                const urlKey = day4[`${tKey}_url`];
-                                const url = getUrlVar(urlKey);            // 실제 URL 변수 값 찾아오기
-                                const hasUrl = typeof url === "string";
-                                const className = hasUrl ? "detail bt" : "";
-                                const onClick = hasUrl ? () => { window.location.href = url; } : undefined;
+                                const cidKey = day4[`${tKey}_cid`];
+                                const cid = getcidVar(cidKey);            // 실제 cid 변수 값 찾아오기
+                                const hascid = typeof cid === "string";
+                                const className = hascid ? "detail bt" : "";
+                                const onClick = hascid ? () => { handleClassSelect(cid) } : undefined;
 
                                 return (
                                     <div key={tKey} className={className} onClick={onClick}>
@@ -478,6 +507,64 @@ function Schedule() {
     );
 }
 
+function ScheduleDetail() {
+    const location = useLocation()
+    const cid = location.state?.cid
+    // const apiKey = process.env.API_KEY
+    const apiKey = 'eee08e71b6364259a3faaaed2ed513e1'
+
+    const [data, setData] = useState(null)
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        if (!cid || !apiKey) {
+            setError('CID 또는 API 키가 없습니다.')
+            return
+        }
+
+        setLoading(true)
+        axios
+            .get('http://api.visitjeju.net/vsjApi/contents/searchList', {
+                params: {
+                    apiKey,
+                    locale: 'kr',
+                    category: 'c1',
+                    page: '1',
+                    cid
+                },
+                headers: {
+                    'User-Agent': 'Mozilla/5.0',
+                    Accept: 'application/json',
+                    Connection: 'close'
+                },
+                timeout: 20000
+            })
+            .then(resp => {
+                setData(resp.data)
+                setError('')
+            })
+            .catch(err => {
+                console.error('API 호출 오류:', err)
+                saveErrorLog(err.message)
+                setError('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.')
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }, [cid, apiKey])
+
+    if (loading) return <div>로딩 중…</div>
+    if (error) return <div className="error">{error}</div>
+    if (!data) return null
+
+    return (
+        <div>
+            <h1>{data}</h1>
+        </div>
+    )
+}
+
 function Ready() {
     ThemeColor("#ffffff");
     return <div className="ready">준비중...</div>;
@@ -487,7 +574,8 @@ function MainApp() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/일정" element={<Schedule />} />
+            <Route path="/상세일정" element={<ScheduleDetail />} />
         </Routes>
     );
 }
