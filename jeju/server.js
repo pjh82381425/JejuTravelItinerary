@@ -53,42 +53,6 @@ app.post('/ReactErrorLog', (req, res) => {
   });
 });
 
-// ✅ 제주 API 프록시 (CORS 회피용)
-app.get('/상세일정/:cid', async (req, res) => {
-  const cid = req.params.cid;
-
-  if (!cid) {
-    logError('요청 오류: CID 누락');
-    return res.status(400).json({ error: 'CID가 필요합니다.' });
-  }
-
-  const url = 'http://api.visitjeju.net/vsjApi/contents/searchList';
-  const params = {
-    apiKey: API_KEY,
-    locale: 'kr',
-    category: 'c1',
-    page: '1',
-    cid
-  };
-
-  try {
-    const response = await axios.get(url, {
-      params,
-      headers: {
-        'User-Agent': 'Mozilla/5.0',
-        Accept: 'application/json',
-        Connection: 'close'
-      },
-      timeout: 20000
-    });
-
-    res.json(response.data);
-  } catch (err) {
-    logError(`제주 API 호출 실패: ${err.message}`);
-    res.status(500).json({ error: '제주 API 호출 실패' });
-  }
-});
-
 // ✅ 리액트 정적 파일 서빙
 app.use(express.static(path.join(__dirname, 'build')));
 

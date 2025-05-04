@@ -381,7 +381,8 @@ function Schedule() {
     };
 
     const handleClassSelect = (cid) => {
-        navigate(`/상세일정/${cid}`);
+        navigate("/상세일정", { state: { cid } });
+        console.log("Selected CID:", cid);
     };
 
     return (
