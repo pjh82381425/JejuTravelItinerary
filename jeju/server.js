@@ -30,7 +30,7 @@ function logError(msg) {
 app.use(express.json());
 
 // ✅ 리액트 클라이언트에서 오는 에러 로그 저장 API
-app.post('/ReactErrorLog', (req, res) => {
+app.post('/api/ReactErrorLog', (req, res) => {
   const clientKey = req.headers['x-api-key'];
   if (!clientKey || clientKey !== API_KEY) {
     return res.status(403).send('접근이 거부되었습니다.');
@@ -53,10 +53,67 @@ app.post('/ReactErrorLog', (req, res) => {
   });
 });
 
+app.get('/api/content/:cid', async (req, res) => {
+  const apiKey = 'eee08e71b6364259a3faaaed2ed513e1';
+  const cid = req.params.cid;
+
+  if (!apiKey) {
+    logError('API 키 미설정');
+    return res.status(500).json({ error: 'API 키 없음' });
+  }
+  if (!cid) {
+    logError('cid 미입력');
+    return res.status(400).json({ error: 'CID 누락' });
+  }
+
+  const url = 'http://api.visitjeju.net/vsjApi/contents/searchList';
+  const params = { apiKey, locale: 'kr', category: 'c1', page: '1', cid };
+  const headers = {
+    'User-Agent': 'Mozilla/5.0',
+    Accept: 'application/json',
+    Connection: 'close'
+  };
+
+  try {
+    const resp = await axios.get(url, { params, headers, timeout: 20000 });
+
+    // ✅ 실제 API는 items를 바로 리턴하고 있음
+    const items = resp.data.items || [];
+
+    if (!Array.isArray(items) || items.length === 0) {
+      logError(`데이터 없음: CID=${cid}`);
+      return res.status(404).json({ error: '해당 콘텐츠가 존재하지 않습니다.' });
+    }
+
+    // ✅ 필요한 데이터만 추출해서 반환
+    const item = items[0];
+    res.json({
+      contents: [
+        {
+          title: item.title,
+          description: item.introduction,
+          address: item.roadaddress,
+          tel: item.phoneno,
+          image: item.repPhoto?.photoid?.imgpath || '',
+          operating_hours: '정보 없음',
+          entrance_fee: '정보 없음'
+        }
+      ]
+    });
+  } catch (err) {
+    logError(`API 호출 오류: ${err.message}`);
+    if (err.response) {
+      logError(`응답 상태: ${err.response.status}`);
+      logError(`응답 데이터: ${JSON.stringify(err.response.data)}`);
+    }
+    res.status(500).json({ error: '제주 API 호출 실패' });
+  }
+});
+
 // ✅ 리액트 정적 파일 서빙
 app.use(express.static(path.join(__dirname, 'build')));
 
-// ✅ SPA 대응 (404 방지)
+// ✅ SPA 대응 (404 방지) + API 경로를 SPA 대응에서 제외
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

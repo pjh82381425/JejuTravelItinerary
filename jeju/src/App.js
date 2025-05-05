@@ -13,7 +13,7 @@ if (!ERROR_LOG_API_KEY) {
 
 export async function saveErrorLog(message, context = {}) {
     try {
-        await axios.post('/ReactErrorLog', {
+        await axios.post(`${window.location.origin}/api/ReactErrorLog`, {
             message,
             context,
             timestamp: new Date().toISOString()
@@ -256,6 +256,7 @@ function Home() {
     }, []);
 
     const handleClassSelect = (classNum) => {
+        console.log("일정으로 이동:", `${ classNum }반`);
         navigate("/일정", { state: { classNum } });
     };
 
@@ -355,6 +356,7 @@ function Schedule() {
 
     // 각 일자 클릭 시 호출되는 함수
     const handleDayClick = (day) => {
+        console.log("날짜로 이동:", `${ day }`);
         setSelectedDay(day);
     };
 
@@ -381,8 +383,9 @@ function Schedule() {
     };
 
     const handleClassSelect = (cid) => {
+        console.log("상세일정으로 이동:", `${ cid }`);
         navigate("/상세일정", { state: { cid } });
-        console.log("Selected CID:", cid);
+        // axios.get(`/상세일정/${cid}`)
     };
 
     return (
@@ -509,61 +512,53 @@ function Schedule() {
 }
 
 function ScheduleDetail() {
-    const location = useLocation()
-    const cid = location.state?.cid
-    // const apiKey = process.env.API_KEY
-    const apiKey = 'eee08e71b6364259a3faaaed2ed513e1'
+    const location = useLocation();
+    const cid = location.state?.cid;
 
-    const [data, setData] = useState(null)
-    const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
+    const [data, setData] = useState(null);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (!cid || !apiKey) {
-            setError('CID 또는 API 키가 없습니다.')
-            return
+        if (!cid) {
+            setError('CID가 없습니다.');
+            return;
         }
 
-        setLoading(true)
+        setLoading(true);
         axios
-            .get('http://api.visitjeju.net/vsjApi/contents/searchList', {
-                params: {
-                    apiKey,
-                    locale: 'kr',
-                    category: 'c1',
-                    page: '1',
-                    cid
-                },
-                headers: {
-                    'User-Agent': 'Mozilla/5.0',
-                    Accept: 'application/json',
-                    Connection: 'close'
-                },
-                timeout: 20000
+            .get(`${window.location.origin}/api/content/${cid}`)
+            .then((res) => {
+                setData(res.data);
+                setError('');
             })
-            .then(resp => {
-                setData(resp.data)
-                setError('')
-            })
-            .catch(err => {
-                console.error('API 호출 오류:', err)
-                saveErrorLog(err.message)
-                setError('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.')
+            .catch((err) => {
+                console.error('API 호출 오류:', err);
+                setError('네트워크 오류가 발생했습니다.');
             })
             .finally(() => {
-                setLoading(false)
-            })
-    }, [cid, apiKey])
+                setLoading(false);
+            });
+    }, [cid]);
 
-    if (loading) return <div>로딩 중…</div>
-    if (error) return <div className="error">{error}</div>
-    if (!data) return null
+    if (loading) return <div>로딩 중…</div>;
+    if (error) return <div className="error">{error}</div>;
+    if (!data || !data.contents || data.contents.length === 0)
+        return <div className="error">데이터가 없습니다.</div>;
+
+    const content = data.contents[0];  // 콘텐츠 1개만 사용
 
     return (
-        <div>
-            <h1>{data}</h1>
+        <div className="detail-view">
+            <h2>{content.title}</h2>
+            <p><strong>설명:</strong> {content.description}</p>
+            <p><strong>주소:</strong> {content.address}</p>
+            <p><strong>전화:</strong> {content.tel}</p>
+            <img src={content.image} alt={content.title} width="400" />
+            <p><strong>운영시간:</strong> {content.operating_hours}</p>
+            <p><strong>입장료:</strong> {content.entrance_fee}</p>
         </div>
-    )
+    );
 }
 
 function Ready() {
