@@ -54,7 +54,7 @@ app.post('/api/ReactErrorLog', (req, res) => {
 });
 
 app.get('/api/content/:cid', async (req, res) => {
-  const apiKey = 'eee08e71b6364259a3faaaed2ed513e1';
+  const apiKey = process.env.API_KEY;
   const cid = req.params.cid;
 
   if (!apiKey) {
