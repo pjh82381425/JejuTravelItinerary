@@ -256,7 +256,7 @@ function Home() {
     }, []);
 
     const handleClassSelect = (classNum) => {
-        console.log("일정으로 이동:", `${ classNum }반`);
+        console.log("일정으로 이동:", `${classNum}반`);
         navigate("/일정", { state: { classNum } });
     };
 
@@ -356,7 +356,7 @@ function Schedule() {
 
     // 각 일자 클릭 시 호출되는 함수
     const handleDayClick = (day) => {
-        console.log("날짜로 이동:", `${ day }`);
+        console.log("날짜로 이동:", `${day}`);
         setSelectedDay(day);
     };
 
@@ -383,7 +383,7 @@ function Schedule() {
     };
 
     const handleClassSelect = (cid) => {
-        console.log("상세일정으로 이동:", `${ cid }`);
+        console.log("상세일정으로 이동:", `${cid}`);
         navigate("/상세일정", { state: { cid } });
         // axios.get(`/상세일정/${cid}`)
     };
@@ -518,6 +518,17 @@ function ScheduleDetail() {
     const [data, setData] = useState(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [isOpen, setIsOpen] = useState(false)
+
+    ThemeColor("#ffffff");
+
+    // 버튼 클릭 시 열림/닫힘 토글
+    const handleToggle = () => {
+        setIsOpen(prev => !prev)
+    }
+
+    const hiddenImgRef = useRef(null);
 
     useEffect(() => {
         if (!cid) {
@@ -541,22 +552,51 @@ function ScheduleDetail() {
             });
     }, [cid]);
 
-    if (loading) return <div>로딩 중…</div>;
+    if (loading) return <div className="loading">로딩 중…</div>;
     if (error) return <div className="error">{error}</div>;
     if (!data || !data.contents || data.contents.length === 0)
         return <div className="error">데이터가 없습니다.</div>;
 
-    const content = data.contents[0];  // 콘텐츠 1개만 사용
+    const content = data.contents[0];
+    const imageUrl = content.image || content.repPhoto?.photoid?.imgpath;
+
+    const handleImageLoad = () => {
+        setImageLoaded(true);
+    };
 
     return (
-        <div className="detail-view">
-            <h2>{content.title}</h2>
-            <p><strong>설명:</strong> {content.description}</p>
-            <p><strong>주소:</strong> {content.address}</p>
-            <p><strong>전화:</strong> {content.tel}</p>
-            <img src={content.image} alt={content.title} width="400" />
-            <p><strong>운영시간:</strong> {content.operating_hours}</p>
-            <p><strong>입장료:</strong> {content.entrance_fee}</p>
+        <div className="detail-view-container">
+            <div
+                className={`detail-view-background-image ${imageLoaded ? 'loaded' : ''}`}
+                style={{ backgroundImage: `url(${imageUrl})` }}
+            >
+                <img
+                    ref={hiddenImgRef}
+                    src={imageUrl}
+                    alt={`${content.title} - 이미지 로딩 실패`}
+                    style={{ display: 'none' }}
+                    onLoad={handleImageLoad}
+                />
+            </div>
+            <div className="detail-view">
+                <p id="title">{content.title}</p>
+                <p>{content.introduction}</p>
+                <button className="toggle-btn" onClick={handleToggle}>
+                    {isOpen ? '접기' : '더보기'}
+                </button>
+                <div
+                    className={
+                        `detail-container ${isOpen ? 'open animate__animated animate__fadeInDown' : ''}`
+                    }
+                >
+                    <div className="detail-content">
+                        <p>주소: {content.address}</p>
+                        <p>전화: {content.phoneno}</p>
+                        <p>위도: {content.latitude}</p>
+                        <p>경도: {content.longitude}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

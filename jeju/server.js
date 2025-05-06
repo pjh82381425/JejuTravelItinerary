@@ -95,12 +95,12 @@ app.get('/api/content/:cid', async (req, res) => {
       contents: [
         {
           title: item.title,
-          description: item.introduction,
-          address: item.roadaddress,
-          tel: item.phoneno,
+          introduction: item.introduction,
+          address: item.address,
+          phoneno: item.phoneno,
           image: item.repPhoto?.photoid?.imgpath || '',
-          operating_hours: '정보 없음',
-          entrance_fee: '정보 없음'
+          latitude: item.latitude,
+          longitude: item.longitude
         }
       ]
     });
