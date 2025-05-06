@@ -54,30 +54,35 @@ app.post('/api/ReactErrorLog', (req, res) => {
 });
 
 app.get('/api/content/:cid', async (req, res) => {
-  const apiKey = process.env.API_KEY;
+  // const apiKey = process.env.API_KEY;
   const cid = req.params.cid;
 
-  if (!apiKey) {
-    logError('API 키 미설정');
-    return res.status(500).json({ error: 'API 키 없음' });
-  }
+  // if (!apiKey) {
+  //   logError('API 키 미설정');
+  //   return res.status(500).json({ error: 'API 키 없음' });
+  // }
   if (!cid) {
     logError('cid 미입력');
     return res.status(400).json({ error: 'CID 누락' });
   }
 
-  const url = 'http://api.visitjeju.net/vsjApi/contents/searchList';
-  const params = { apiKey, locale: 'kr', category: 'c1', page: '1', cid };
-  const headers = {
-    'User-Agent': 'Mozilla/5.0',
-    Accept: 'application/json',
-    Connection: 'close'
-  };
+  // const url = 'http://api.visitjeju.net/vsjApi/contents/searchList';
+  // const params = { apiKey, locale: 'kr', category: 'c1', page: '1', cid };
+  // const headers = {
+  //   'User-Agent': 'Mozilla/5.0',
+  //   Accept: 'application/json',
+  //   Connection: 'close'
+  // };
 
   try {
-    const resp = await axios.get(url, { params, headers, timeout: 20000 });
+    // ✅ GAS 프록시 주소로 대체
+    const proxyUrl = 'https://script.google.com/macros/s/AKfycbzGbn9SJKsu4kxReHbTIDGgSn0V_nI6vzhqrXtxifZcqlqcubup6ImgfPFyEJ0MJZh4Lg/exec';  // 본인의 GAS 웹앱 주소 입력
 
-    // ✅ 실제 API는 items를 바로 리턴하고 있음
+    const resp = await axios.get(proxyUrl, {
+      params: { cid },
+      maxRedirects: 5 // 최대 5번까지 리디렉션 허용
+    })
+
     const items = resp.data.items || [];
 
     if (!Array.isArray(items) || items.length === 0) {
@@ -85,7 +90,6 @@ app.get('/api/content/:cid', async (req, res) => {
       return res.status(404).json({ error: '해당 콘텐츠가 존재하지 않습니다.' });
     }
 
-    // ✅ 필요한 데이터만 추출해서 반환
     const item = items[0];
     res.json({
       contents: [
