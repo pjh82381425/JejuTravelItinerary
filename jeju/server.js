@@ -80,8 +80,17 @@ app.get('/api/content/:cid', async (req, res) => {
 
     const resp = await axios.get(proxyUrl, {
       params: { cid },
-      maxRedirects: 5 // 최대 5번까지 리디렉션 허용
-    })
+      timeout: 10000,
+      raxConfig: {
+        retry: 3,  // 최대 3회 재시도
+        noResponseRetries: 2,
+        retryDelay: 1000,  // 1초 간격
+        onRetryAttempt: err => {
+          const cfg = rax.getConfig(err);
+          console.warn(`⏳ 재시도 #${cfg.currentRetryAttempt}`);
+        },
+      }
+    });
 
     const items = resp.data.items || [];
 
