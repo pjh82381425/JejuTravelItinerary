@@ -76,7 +76,7 @@ app.get('/api/content/:cid', async (req, res) => {
 
   try {
     // ✅ GAS 프록시 주소로 대체
-    const proxyUrl = 'https://script.google.com/macros/s/AKfycbzGbn9SJKsu4kxReHbTIDGgSn0V_nI6vzhqrXtxifZcqlqcubup6ImgfPFyEJ0MJZh4Lg/exec';  // 본인의 GAS 웹앱 주소 입력
+    const proxyUrl = 'https://script.google.com/macros/s/AKfycbzGbn9SJKsu4kxReHbTIDGgSn0V_nI6vzhqrXtxifZcqlqcubup6ImgfPFyEJ0MJZh4Lg/exec';
 
     const resp = await axios.get(proxyUrl, {
       params: { cid },
