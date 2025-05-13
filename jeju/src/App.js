@@ -48,7 +48,7 @@ const TeamGuide = {
     "4": ["teamA", "team1"],
     "5": ["teamB", "team1"],
     "6": ["teamB", "team2"],
-    "7": ["teamC", "team1"],
+    "7": ["teamC", "team2"],
     "8": ["teamB", "team2"],
     "9": ["teamC", "team2"],
     "10": ["teamA", "team2"],
