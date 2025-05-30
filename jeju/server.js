@@ -23,14 +23,14 @@ function logError(msg) {
   const now = new Date().toISOString();
   const line = `[${now}] ${msg}\n`;
   fs.appendFile(logFilePath, line, (err) => {
-    if (err) console.error('❌ 로그 기록 실패:', err);
+    if (err) console.error('로그 기록 실패:', err);
   });
 }
 
 // JSON 파싱
 app.use(express.json());
 
-// ✅ 리액트 클라이언트에서 오는 에러 로그 저장 API
+//  리액트 클라이언트에서 오는 에러 로그 저장 API
 app.post('/api/ReactErrorLog', (req, res) => {
   const clientKey = req.headers['x-api-key'];
   if (!clientKey || clientKey !== API_KEY) {
@@ -46,76 +46,15 @@ app.post('/api/ReactErrorLog', (req, res) => {
 
   fs.appendFile(logFilePath, logLine, (err) => {
     if (err) {
-      console.error('❌ 로그 저장 실패:', err);
+      console.error('로그 저장 실패:', err);
       return res.status(500).send('로그 저장 실패');
     }
-    console.log('✅ 로그 저장 성공');
+    console.log('로그 저장 성공');
     res.sendStatus(200);
   });
 });
-//   const cid = req.params.cid;
 
-//   if (!cid) {
-//     logError('cid 미입력');
-//     return res.status(400).json({ error: 'CID 누락' });
-//   }
-
-//   try {
-//     // ✅ GAS 프록시 주소로 대체
-//     const proxyUrl = 'https://script.google.com/macros/s/AKfycbzGbn9SJKsu4kxReHbTIDGgSn0V_nI6vzhqrXtxifZcqlqcubup6ImgfPFyEJ0MJZh4Lg/exec';
-
-//     const resp = await axios.get(proxyUrl, {
-//       params: { cid },
-//       timeout: 10000,
-//       raxConfig: {
-//         retry: 2,  // 최대 2회 재시도
-//         noResponseRetries: 2,  // 응답 없음 재시도
-//         httpMethodsToRetry: ['GET', 'POST'],  // GET 및 POST 메서드 재시도
-//         retryDelay: 2000,  //2초 간격
-//         onRetryAttempt: err => {
-//           const cfg = rax.getConfig(err);
-//           console.warn(`⏳ 재시도 #${cfg.currentRetryAttempt}`);
-//         },
-//       }
-//     });
-
-//     const items = resp.data.items || [];
-
-//     if (!Array.isArray(items) || items.length === 0) {
-//       logError(`데이터 없음: CID=${cid}`);
-//       return res.status(404).json({ error: '해당 콘텐츠가 존재하지 않습니다.' });
-//     }
-
-//     const item = items[0];
-//     res.json({
-//       contents: [
-//         {
-//           title: item.title,
-//           introduction: item.introduction,
-//           address: item.address,
-//           phoneno: item.phoneno,
-//           image: item.repPhoto?.photoid?.imgpath || '',
-//           latitude: item.latitude,
-//           longitude: item.longitude
-//         }
-//       ]
-//     });
-//   } catch (err) {
-//     logError(`API 호출 오류: ${err.message}`);
-//     if (err.response) {
-//       logError(`응답 상태: ${err.response.status}`);
-//       logError(`응답 데이터: ${JSON.stringify(err.response.data)}`);
-//     }
-//     res.status(500).json({ error: '제주 API 호출 실패' });
-//   }
-// });
-
-// ✅ 리액트 정적 파일 서빙
-
-// axios 및 rax 불러오기
-
-// axios 인스턴스 생성
-
+// axios 인스턴스 및 rax 재시도 설정 구성
 const client = axios.create({
   timeout: 10000, // 10초 대기
 });
@@ -134,16 +73,15 @@ client.defaults.raxConfig = {
   },
 };
 
-// rax attach
 rax.attach(client);
 
-// 수동 재시도 함수
+// 재시도 함수
 async function fetchWithRetry(url, params, maxRetries = 3, delay = 2000) {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       return await client.get(url, { params });
     } catch (err) {
-      console.warn(`❌ 요청 실패 (시도 ${attempt}/${maxRetries}): ${err.message}`);
+      console.warn(` 요청 실패 (시도 ${attempt}/${maxRetries}): ${err.message}`);
       if (attempt === maxRetries) throw err;
       await new Promise(res => setTimeout(res, delay));
     }
@@ -160,10 +98,10 @@ app.get('/api/content/:cid', async (req, res) => {
   }
 
   try {
-    // ✅ GAS 프록시 주소
-    const proxyUrl = 'https://script.google.com/macros/s/AKfycbzGbn9SJKsu4kxReHbTIDGgSn0V_nI6vzhqrXtxifZcqlqcubup6ImgfPFyEJ0MJZh4Lg/exec';  // 실제 URL 입력
+    // VisitJeju API를 우회 요청하는 Google Apps Script 프록시 URL
+    const proxyUrl = 'https://script.google.com/macros/s/AKfycbzGbn9SJKsu4kxReHbTIDGgSn0V_nI6vzhqrXtxifZcqlqcubup6ImgfPFyEJ0MJZh4Lg/exec';
 
-    // ✅ 수동 재시도 로직 포함하여 요청
+    // 재시도 로직
     const resp = await fetchWithRetry(proxyUrl, { cid });
 
     const items = resp.data.items || [];
@@ -199,12 +137,12 @@ app.get('/api/content/:cid', async (req, res) => {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-// ✅ SPA 대응 (404 방지) + API 경로를 SPA 대응에서 제외
+// React SPA의 라우팅 처리를 위해, API 요청이 아닌 모든 경로는 index.html로 응답
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// ✅ 서버 실행
+// 서버 실행
 app.listen(PORT, () => {
-  console.log(`✅ 서버 실행 중: http://localhost:${PORT}`);
+  console.log(`서버 실행 중: http://localhost:${PORT}`);
 });
